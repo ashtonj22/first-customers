@@ -47,7 +47,7 @@ Outcomes teach too: when Tom (visible notes: "not really a candle person") redir
 
 ## Architecture
 
-- **Next.js (App Router) + TypeScript + Tailwind.** No database — state is JSON files in `data/`, reset anytime via the Reset demo button (restores `data/seeds/`).
+- **Next.js (App Router) + TypeScript + Tailwind.** No database — state is a single ~10KB JSON document, reset anytime via the Reset demo button (restores `data/seeds/`). Locally it lives in `data/*.json` so it stays hand-editable; deployed, each visitor gets their own private copy (see [Deployment](#deployment)).
 - **Claude API, model `claude-sonnet-5`** (`lib/anthropic.ts`), used three ways:
   - `lib/draft.ts` — drafts each personal SMS (playbook + visible contact fields only).
   - `lib/reflect.ts` — turns feedback/outcomes into playbook rule changes + changelog entries.
@@ -83,3 +83,32 @@ npm run dev                  # http://localhost:3000
 ```
 
 See `DEMO-SCRIPT.md` for the 3–5 minute walkthrough.
+
+## Deployment
+
+Deployed code on Vercel gets a **read-only filesystem**, so the local JSON-file
+store cannot be used there. State is loaded once per request and written back
+once at the end, behind a `withStore()` wrapper on each route (`lib/state.ts`) —
+which keeps every accessor in `lib/store.ts` synchronous and costs one read plus
+at most one write per request. Read-only requests skip the write entirely.
+
+The backend is chosen at runtime:
+
+| Environment | Store | Notes |
+| --- | --- | --- |
+| Local dev | `data/*.json` | Same files as before, still hand-editable |
+| Vercel + Blob store | One private blob per visitor | Keyed by an `fc_sid` session cookie issued in `proxy.ts` |
+| Vercel, no Blob store | In-memory | Fallback so a deploy still runs; state resets per instance |
+
+Giving each visitor their own session matters for judging: the learning loop
+only demonstrates itself if a rejection you made is still in the playbook on the
+next click, and one reviewer's actions must not leak into another's demo.
+
+Seed data is imported statically rather than read with `fs`, so it survives
+bundling without any `outputFileTracingIncludes` configuration.
+
+```bash
+vercel link
+vercel blob create-store <name> --access private --yes   # injects BLOB_READ_WRITE_TOKEN
+vercel deploy --prod
+```
