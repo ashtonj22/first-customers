@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
 import { getSettings, saveSettings, appendActivity, makeId } from "@/lib/store";
+import { withStore } from "@/lib/state";
 
-export async function GET() {
+async function handleGET() {
   return NextResponse.json({ settings: getSettings() });
 }
 
-export async function PATCH(req: Request) {
+async function handlePATCH(req: Request) {
   const body = await req.json();
   const current = getSettings();
   const updated = { ...current, ...body };
@@ -24,3 +25,6 @@ export async function PATCH(req: Request) {
 
   return NextResponse.json({ settings: updated });
 }
+
+export const GET = withStore(handleGET);
+export const PATCH = withStore(handlePATCH);

@@ -1,5 +1,4 @@
-import fs from "fs";
-import path from "path";
+import { currentState, markDirty, replaceState, freshState } from "./state";
 import type {
   Contact,
   Playbook,
@@ -8,26 +7,19 @@ import type {
   MessagesStore,
 } from "./types";
 
-const DATA_DIR = path.join(process.cwd(), "data");
-const SEEDS_DIR = path.join(DATA_DIR, "seeds");
-
-function readJSON<T>(file: string): T {
-  const p = path.join(DATA_DIR, file);
-  const raw = fs.readFileSync(p, "utf-8");
-  return JSON.parse(raw) as T;
-}
-
-function writeJSON<T>(file: string, data: T): void {
-  const p = path.join(DATA_DIR, file);
-  fs.writeFileSync(p, JSON.stringify(data, null, 2), "utf-8");
-}
+/**
+ * These accessors stay synchronous on purpose. `withStore` loads the whole
+ * document before the handler runs and writes it back afterwards, so reads and
+ * writes here are just in-memory operations on the request's state.
+ */
 
 export function getContacts(): Contact[] {
-  return readJSON<Contact[]>("contacts.json");
+  return currentState().contacts;
 }
 
 export function saveContacts(contacts: Contact[]): void {
-  writeJSON("contacts.json", contacts);
+  currentState().contacts = contacts;
+  markDirty();
 }
 
 export function getContact(id: string): Contact | undefined {
@@ -39,48 +31,49 @@ export function updateContact(id: string, patch: Partial<Contact>): Contact | un
   const idx = contacts.findIndex((c) => c.id === id);
   if (idx === -1) return undefined;
   contacts[idx] = { ...contacts[idx], ...patch };
-  saveContacts(contacts);
+  markDirty();
   return contacts[idx];
 }
 
 export function addContact(contact: Contact): void {
-  const contacts = getContacts();
-  contacts.push(contact);
-  saveContacts(contacts);
+  getContacts().push(contact);
+  markDirty();
 }
 
 export function getPlaybook(): Playbook {
-  return readJSON<Playbook>("playbook.json");
+  return currentState().playbook;
 }
 
 export function savePlaybook(playbook: Playbook): void {
-  writeJSON("playbook.json", playbook);
+  currentState().playbook = playbook;
+  markDirty();
 }
 
 export function getSettings(): Settings {
-  return readJSON<Settings>("settings.json");
+  return currentState().settings;
 }
 
 export function saveSettings(settings: Settings): void {
-  writeJSON("settings.json", settings);
+  currentState().settings = settings;
+  markDirty();
 }
 
 export function getActivity(): ActivityEntry[] {
-  return readJSON<ActivityEntry[]>("activity.json");
+  return currentState().activity;
 }
 
 export function appendActivity(entry: ActivityEntry): void {
-  const activity = getActivity();
-  activity.push(entry);
-  writeJSON("activity.json", activity);
+  getActivity().push(entry);
+  markDirty();
 }
 
 export function getMessages(): MessagesStore {
-  return readJSON<MessagesStore>("messages.json");
+  return currentState().messages;
 }
 
 export function saveMessages(store: MessagesStore): void {
-  writeJSON("messages.json", store);
+  currentState().messages = store;
+  markDirty();
 }
 
 export function appendMessage(
@@ -90,22 +83,11 @@ export function appendMessage(
   const store = getMessages();
   if (!store[contactId]) store[contactId] = [];
   store[contactId].push(message);
-  saveMessages(store);
+  markDirty();
 }
 
 export function resetAllData(): void {
-  const files = [
-    "contacts.json",
-    "playbook.json",
-    "settings.json",
-    "activity.json",
-    "messages.json",
-  ];
-  for (const file of files) {
-    const seedPath = path.join(SEEDS_DIR, file);
-    const raw = fs.readFileSync(seedPath, "utf-8");
-    fs.writeFileSync(path.join(DATA_DIR, file), raw, "utf-8");
-  }
+  replaceState(freshState());
 }
 
 export function makeId(prefix: string): string {

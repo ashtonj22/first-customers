@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
 import { getContact, getPlaybook, getMessages, appendActivity, makeId, updateContact } from "@/lib/store";
 import { draftMessage } from "@/lib/draft";
+import { withStore } from "@/lib/state";
 
-export async function POST(req: Request) {
+async function handlePOST(req: Request) {
   const body = await req.json();
   const { contactId, followUp } = body as { contactId: string; followUp?: boolean };
 
@@ -36,3 +37,5 @@ export async function POST(req: Request) {
 
   return NextResponse.json({ draft, contact });
 }
+
+export const POST = withStore(handlePOST);

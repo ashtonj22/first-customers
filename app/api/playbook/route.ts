@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
 import { getPlaybook, savePlaybook, appendActivity, makeId } from "@/lib/store";
 import type { Playbook } from "@/lib/types";
+import { withStore } from "@/lib/state";
 
-export async function GET() {
+async function handleGET() {
   return NextResponse.json({ playbook: getPlaybook() });
 }
 
@@ -25,7 +26,7 @@ function setSectionArray(pb: Playbook, section: Section, arr: string[]) {
   }
 }
 
-export async function PATCH(req: Request) {
+async function handlePATCH(req: Request) {
   const body = await req.json();
   const { action, section, index, value } = body as {
     action: "add" | "edit" | "delete";
@@ -63,3 +64,6 @@ export async function PATCH(req: Request) {
 
   return NextResponse.json({ playbook });
 }
+
+export const GET = withStore(handleGET);
+export const PATCH = withStore(handlePATCH);

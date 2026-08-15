@@ -12,8 +12,9 @@ import {
 import { simulateReply } from "@/lib/simulate";
 import { reflect } from "@/lib/reflect";
 import type { Contact, ContactStatus } from "@/lib/types";
+import { withStore } from "@/lib/state";
 
-export async function POST(req: Request) {
+async function handlePOST(req: Request) {
   const body = await req.json();
   const { contactId, message, askType, reasoning, actor } = body as {
     contactId: string;
@@ -150,3 +151,5 @@ export async function POST(req: Request) {
     changelogEntry: reflection.changelogEntry,
   });
 }
+
+export const POST = withStore(handlePOST);

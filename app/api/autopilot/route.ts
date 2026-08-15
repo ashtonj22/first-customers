@@ -15,8 +15,9 @@ import { draftMessage } from "@/lib/draft";
 import { simulateReply } from "@/lib/simulate";
 import { reflect } from "@/lib/reflect";
 import type { ContactStatus } from "@/lib/types";
+import { withStore } from "@/lib/state";
 
-export async function POST() {
+async function handlePOST() {
   const settings = getSettings();
   const contacts = getContacts();
   const activity = getActivity();
@@ -136,3 +137,5 @@ export async function POST() {
 
   return NextResponse.json({ results, ran: true });
 }
+
+export const POST = withStore(handlePOST);
