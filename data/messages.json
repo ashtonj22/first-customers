@@ -1,0 +1,56 @@
+{
+  "c13": [
+    {
+      "id": "msg_msujasal_cu2le9",
+      "sender": "agent",
+      "text": "Hey Nina! Miss you and your epically curated dinner parties—how's life been? I just launched Ember & Oak gift sets ($28) and immediately thought of your table settings; want me to send you the link to grab one, and is there anyone else you know who'd swoon over these too?",
+      "timestamp": 1786807916733
+    },
+    {
+      "id": "msg_msujaxbe_2pc7gc",
+      "sender": "contact",
+      "text": "MAYA! omg yes send me the link immediately, I'm obsessed already just from the name. And yes please put me down for one asap. Also — my friend Jess would literally die, she's been on a whole cozy-home kick lately, I'll send her your way too!",
+      "timestamp": 1786807924742
+    }
+  ],
+  "c14": [
+    {
+      "id": "msg_msujclbw_9ivbww",
+      "sender": "agent",
+      "text": "Hey Chris! How's the engineering life treating you these days? I know candles aren't really your scene, I'm curious if you know anyone who would love them?! — and if you ever want one yourself, happy to hook you up with the friends & family discount.",
+      "timestamp": 1786808001020
+    },
+    {
+      "id": "msg_msujcntn_5he5il",
+      "sender": "contact",
+      "text": "Hey! Engineering's keeping me busy as always, haha. Congrats on getting Ember & Oak off the ground - that's awesome. Candles really aren't my thing but I'll keep an ear out for anyone who might dig them. Good luck with the launch!",
+      "timestamp": 1786808005751
+    }
+  ],
+  "c07": [
+    {
+      "id": "msg_msujddoq_2kjs48",
+      "sender": "agent",
+      "text": "Hi Olivia! How's wedding planning going, cousin?? I've been dreaming up a boho-vibe gift set at Ember & Oak that feels so 'you' — want me to send you the link with a friends & family discount to grab one for your registry?",
+      "timestamp": 1786808037770
+    },
+    {
+      "id": "msg_msujdfhm_0tu2bj",
+      "sender": "contact",
+      "text": "OMG YES send the link!! Wedding planning is consuming my entire brain rn 😩 but a boho gift set that feels like 'me' sounds perfect for the registry, I'm obsessed already. Also you HAVE to tell me everything about the launch!!",
+      "timestamp": 1786808041606
+    },
+    {
+      "id": "msg_msujol2p_80vjkn",
+      "sender": "agent",
+      "text": "Hey Liv! How's wedding planning treating you today — still drowning in Pinterest boards? 😊 So glad the boho set felt like \"you\" for the registry, that makes me so happy. If you're loving it, you could totally set up a subscription so you never run out before the big day — and if any bridesmaids or wedding guests need gift ideas, send them my way and I'll hook them up with a friends & family discount link.",
+      "timestamp": 1786808560561
+    },
+    {
+      "id": "msg_msujooh4_xeql52",
+      "sender": "contact",
+      "text": "Omg yes still drowning 😂 but the boho set is seriously my favorite thing on the whole registry, I keep sniffing the sample candle lol. A subscription sounds perfect honestly, I don't want to run out before the big day! And yes!! I'll totally send my bridesmaids your way, a few of them have been asking what to get me anyway 🥰",
+      "timestamp": 1786808566468
+    }
+  ]
+}

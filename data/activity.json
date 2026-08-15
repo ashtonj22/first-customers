@@ -1,0 +1,582 @@
+[
+  {
+    "id": "act_msui9lkb_jmn8uk",
+    "timestamp": 1786806181739,
+    "actor": "user",
+    "action": "manual_playbook_edit",
+    "target": "globalRules",
+    "reasoning": "Maya manually edited a rule in globalRules.",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msuiaf4e_qfv14x",
+    "timestamp": 1786806220046,
+    "actor": "agent",
+    "action": "proposed",
+    "target": "Jess Kane",
+    "reasoning": "Leads with the relationship as required for close contacts, then ties the candle gift set directly to Jess's known love of hosting dinner parties and cozy aesthetics.",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msuib6xv_kw2nca",
+    "timestamp": 1786806256099,
+    "actor": "agent",
+    "action": "proposed",
+    "target": "Olivia Marsh",
+    "reasoning": "Leads with the relationship and wedding excitement per close-tier rules, then ties the boho gift sets directly to her known aesthetic and registry interest for a natural direct ask.",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msuib9ya_g2tpo4",
+    "timestamp": 1786806260002,
+    "actor": "agent",
+    "action": "proposed",
+    "target": "Jess Kane",
+    "reasoning": "Leads with relationship per close-tier rule, ties directly to her known love of dinner parties and cozy aesthetics, and adds a referral ask since her frequent hosting makes her a natural hub for word-of-mouth.",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msuidmwz_cisjv3",
+    "timestamp": 1786806370115,
+    "actor": "agent",
+    "action": "proposed",
+    "target": "Nina Alvarez",
+    "reasoning": "Leads with the friendship first per close-tier rules, ties the product directly to her known love of dinner parties and aesthetics, and adds a referral ask since she's a natural hub for introducing new hosts to the brand.",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msuidnmz_9qqn5c",
+    "timestamp": 1786806371051,
+    "actor": "agent",
+    "action": "proposed",
+    "target": "Jess Kane",
+    "reasoning": "Leads with the relationship as required for close contacts, ties directly to her known love of hosting dinner parties and cozy aesthetics, and combines a direct purchase ask with a natural referral ask given her wide social circle.",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msuidubu_5dhd6s",
+    "timestamp": 1786806379722,
+    "actor": "agent",
+    "action": "proposed",
+    "target": "Jess Kane",
+    "reasoning": "Leads with the relationship per close-tier rules, ties directly to her known love of dinner parties and cozy aesthetics, and adds a referral ask since her monthly gatherings are a natural source of warm leads.",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msuidve0_e905y4",
+    "timestamp": 1786806381096,
+    "actor": "agent",
+    "action": "proposed",
+    "target": "Jess Kane",
+    "reasoning": "Leads with the relationship per close-tier rules, ties directly to her known love of dinner parties and cozy aesthetics, and gives a clear direct purchase ask with an explicit discount offer.",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msuiep8d_nnl2qb",
+    "timestamp": 1786806419773,
+    "actor": "agent",
+    "action": "proposed",
+    "target": "Jess Kane",
+    "reasoning": "Leads with the relationship as required for close contacts, then ties the pitch directly to Jess's known love of hosting dinner parties and cozy vibes.",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msuinppi_ni5b1z",
+    "timestamp": 1786806840294,
+    "actor": "agent",
+    "action": "proposed",
+    "target": "Jess Kane",
+    "reasoning": "Leads with the relationship per close-tier rules, ties the candles directly to her known love of hosting dinner parties and cozy aesthetics, and gives a clear direct ask with an explicit discount offer.",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msuiy4la_1ysxn7",
+    "timestamp": 1786807326142,
+    "actor": "agent",
+    "action": "proposed",
+    "target": "Jess Kane",
+    "reasoning": "Leads with the relationship as required for close contacts, then ties the product directly to her known love of hosting cozy dinner parties, ending with a clear direct purchase ask.",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msuj4trc_xkugag",
+    "timestamp": 1786807638696,
+    "actor": "agent",
+    "action": "proposed",
+    "target": "Jess Kane",
+    "reasoning": "Leads with the relationship per close-tier rules, then ties the pitch directly to Jess's known love of hosting cozy dinner parties for a natural, personal fit.",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msuj9dfa_6ml38a",
+    "timestamp": 1786807850806,
+    "actor": "agent",
+    "action": "proposed",
+    "target": "Nina Alvarez",
+    "reasoning": "Leads with the relationship per close-tier rules, then ties the product directly to her known love of hosting and aesthetic details, making the ask feel personal rather than templated.",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msujasam_wd8i68",
+    "timestamp": 1786807916734,
+    "actor": "user",
+    "action": "approved_send",
+    "target": "Nina Alvarez",
+    "reasoning": "Leads with the relationship per close-tier rules, then ties the product directly to her known love of hosting and aesthetic details, making the ask feel personal rather than templated.",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msujaxbe_iiyba1",
+    "timestamp": 1786807923243,
+    "actor": "agent",
+    "action": "outcome",
+    "target": "Nina Alvarez",
+    "reasoning": "Simulated outcome: referral — \"MAYA! omg yes send me the link immediately, I'm obsessed already just from the name. And yes please put me down for one asap. Also — my friend Jess would literally die, she's been on a whole cozy-home kick lately, I'll send her your way too!\"",
+    "outcome": "referral",
+    "learned": null
+  },
+  {
+    "id": "act_msujb5c9_whgjhd",
+    "timestamp": 1786807933643,
+    "actor": "agent",
+    "action": "learned",
+    "target": "Nina Alvarez",
+    "reasoning": "Nina Alvarez (close, former roommate) converted on the referral ask rather than the direct purchase ask, suggesting she's more valuable as a connector given her social/hosting profile.",
+    "outcome": "referral",
+    "learned": "Nina Alvarez (close, former roommate) converted on the referral ask rather than the direct purchase ask, suggesting she's more valuable as a connector given her social/hosting profile."
+  },
+  {
+    "id": "act_msujbit7_2nv1gd",
+    "timestamp": 1786807951099,
+    "actor": "agent",
+    "action": "proposed",
+    "target": "Chris Jessup",
+    "reasoning": "Chris is a practical, non-candle-person but supportive brother-in-law, so per the ask-style rule I lead with relationship, then pivot to a referral ask instead of a hard sell, while still offering a low-pressure direct option.",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msujck97_b34uzo",
+    "timestamp": 1786807999627,
+    "actor": "user",
+    "action": "edited",
+    "target": "Chris Jessup",
+    "reasoning": "Edited draft before sending (diff captured).",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msujclbx_f006fx",
+    "timestamp": 1786808001021,
+    "actor": "user",
+    "action": "approved_send",
+    "target": "Chris Jessup",
+    "reasoning": "Chris is a practical, non-candle-person but supportive brother-in-law, so per the ask-style rule I lead with relationship, then pivot to a referral ask instead of a hard sell, while still offering a low-pressure direct option.",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msujcntn_aqr2hk",
+    "timestamp": 1786808004252,
+    "actor": "agent",
+    "action": "outcome",
+    "target": "Chris Jessup",
+    "reasoning": "Simulated outcome: reply — \"Hey! Engineering's keeping me busy as always, haha. Congrats on getting Ember & Oak off the ground - that's awesome. Candles really aren't my thing but I'll keep an ear out for anyone who might dig them. Good luck with the launch!\"",
+    "outcome": "reply",
+    "learned": null
+  },
+  {
+    "id": "act_msujcthh_n86yfm",
+    "timestamp": 1786808011589,
+    "actor": "agent",
+    "action": "proposed",
+    "target": "Olivia Marsh",
+    "reasoning": "Leads with relationship as required for close-tier contacts, references her upcoming wedding and boho aesthetic from notes, and makes a clear direct ask with an explicit discount offer rather than an ambiguous gift.",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msujcw2e_rqelyk",
+    "timestamp": 1786808014936,
+    "actor": "agent",
+    "action": "learned",
+    "target": "Chris Jessup",
+    "reasoning": "For Chris Jessup, a close contact who isn't a personal fit for candles, leading with the relationship then pivoting to a referral ask with an explicit friends & family discount offer led to a reply.",
+    "outcome": "reply",
+    "learned": "For Chris Jessup, a close contact who isn't a personal fit for candles, leading with the relationship then pivoting to a referral ask with an explicit friends & family discount offer led to a reply."
+  },
+  {
+    "id": "act_msujcwed_eaefpk",
+    "timestamp": 1786808015366,
+    "actor": "agent",
+    "action": "learned",
+    "target": "Chris Jessup",
+    "reasoning": "Maya softened a referral ask from an imperative command ('send them my way') to a casual curious question ('I'm curious if you know anyone who would love them?!'), showing that referral asks — even to close contacts who aren't a personal fit — should feel low-pressure and conversational rather than direct requests.",
+    "outcome": null,
+    "learned": "Maya softened a referral ask from an imperative command ('send them my way') to a casual curious question ('I'm curious if you know anyone who would love them?!'), showing that referral asks — even to close contacts who aren't a personal fit — should feel low-pressure and conversational rather than direct requests."
+  },
+  {
+    "id": "act_msujddoq_2ixtlw",
+    "timestamp": 1786808037770,
+    "actor": "user",
+    "action": "approved_send",
+    "target": "Olivia Marsh",
+    "reasoning": "Leads with relationship as required for close-tier contacts, references her upcoming wedding and boho aesthetic from notes, and makes a clear direct ask with an explicit discount offer rather than an ambiguous gift.",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msujdfhn_btl5nf",
+    "timestamp": 1786808040108,
+    "actor": "agent",
+    "action": "outcome",
+    "target": "Olivia Marsh",
+    "reasoning": "Simulated outcome: purchase — \"OMG YES send the link!! Wedding planning is consuming my entire brain rn 😩 but a boho gift set that feels like 'me' sounds perfect for the registry, I'm obsessed already. Also you HAVE to tell me everything about the launch!!\"",
+    "outcome": "purchase",
+    "learned": null
+  },
+  {
+    "id": "act_msujdr0v_gq6jui",
+    "timestamp": 1786808055057,
+    "actor": "agent",
+    "action": "learned",
+    "target": "Olivia Marsh",
+    "reasoning": "For close contacts, tying the product ask to a known life event (like a wedding registry) and pairing it with an explicit friends & family discount offer led to a purchase, reinforcing the value of a natural relationship-to-ask transition.",
+    "outcome": "purchase",
+    "learned": "For close contacts, tying the product ask to a known life event (like a wedding registry) and pairing it with an explicit friends & family discount offer led to a purchase, reinforcing the value of a natural relationship-to-ask transition."
+  },
+  {
+    "id": "act_msujdyzk_aj22ku",
+    "timestamp": 1786808065376,
+    "actor": "agent",
+    "action": "proposed_followup",
+    "target": "Chris Jessup",
+    "reasoning": "Chris is close but not a personal candle fan per the notes, so the playbook calls for leading with the relationship and using a low-pressure referral ask rather than a direct buy ask.",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msuje1fe_v4b3ly",
+    "timestamp": 1786808068538,
+    "actor": "agent",
+    "action": "proposed",
+    "target": "Mia Jessup",
+    "reasoning": "Leads with sisterly concern about her new-mom exhaustion before mentioning the product, then ties the ask directly to her new baby by offering it as a free gift rather than a sale.",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msuje8ag_5aj7gk",
+    "timestamp": 1786808077432,
+    "actor": "agent",
+    "action": "proposed",
+    "target": "Mia Jessup",
+    "reasoning": "Leads with sisterly concern about new-mom life before mentioning the business, then ties the candle offer directly to her new-baby self-care needs with an explicit friends & family discount, per the close-tier playbook.",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msujf4ea_8d5dtr",
+    "timestamp": 1786808119042,
+    "actor": "user",
+    "action": "rejected",
+    "target": "Mia Jessup",
+    "reasoning": "It's not clear if I'm going to charge her or give her something. The ask is not specific enough.",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msujffsv_fkup4p",
+    "timestamp": 1786808133824,
+    "actor": "agent",
+    "action": "learned",
+    "target": "Mia Jessup",
+    "reasoning": "Maya rejected a message to her sister because mixing 'send you something' (gift framing) with 'my family discount' (paid framing) in the same offer made it unclear whether she'd be charged; this ambiguity risk applies to all messages, not just close-tier ones.",
+    "outcome": null,
+    "learned": "Maya rejected a message to her sister because mixing 'send you something' (gift framing) with 'my family discount' (paid framing) in the same offer made it unclear whether she'd be charged; this ambiguity risk applies to all messages, not just close-tier ones."
+  },
+  {
+    "id": "act_msujn4mt_okjdib",
+    "timestamp": 1786808492597,
+    "actor": "user",
+    "action": "settings_changed",
+    "target": "guardrails",
+    "reasoning": "Settings updated: mode",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msujn4n3_13nyc3",
+    "timestamp": 1786808492607,
+    "actor": "autopilot",
+    "action": "deferred_to_human",
+    "target": "Chris Jessup",
+    "reasoning": "Close-tier contacts always require human approval, regardless of autopilot settings.",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msujn7cc_z1f9q0",
+    "timestamp": 1786808496108,
+    "actor": "user",
+    "action": "settings_changed",
+    "target": "guardrails",
+    "reasoning": "Settings updated: mode",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msujnjo8_sv3izr",
+    "timestamp": 1786808512088,
+    "actor": "agent",
+    "action": "proposed_followup",
+    "target": "Olivia Marsh",
+    "reasoning": "Leads with the relationship and wedding-planning detail (per close-tier rule), thanks her without re-pitching the product she already bought, and naturally transitions to a subscription upsell plus a referral ask.",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msujo1lt_fpzb6v",
+    "timestamp": 1786808535329,
+    "actor": "agent",
+    "action": "proposed_followup",
+    "target": "Olivia Marsh",
+    "reasoning": "Leads with the relationship per close-tier rules, references her wedding planning and boho registry preference specifically, thanks her implicitly by celebrating the fit, then moves to a subscription upsell (direct ask) plus a natural referral ask tied to her wedding circle.",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msujol2p_kpld0c",
+    "timestamp": 1786808560561,
+    "actor": "user",
+    "action": "approved_send",
+    "target": "Olivia Marsh",
+    "reasoning": "Leads with the relationship per close-tier rules, references her wedding planning and boho registry preference specifically, thanks her implicitly by celebrating the fit, then moves to a subscription upsell (direct ask) plus a natural referral ask tied to her wedding circle.",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msujooh4_9718jm",
+    "timestamp": 1786808564969,
+    "actor": "agent",
+    "action": "outcome",
+    "target": "Olivia Marsh",
+    "reasoning": "Simulated outcome: referral — \"Omg yes still drowning 😂 but the boho set is seriously my favorite thing on the whole registry, I keep sniffing the sample candle lol. A subscription sounds perfect honestly, I don't want to run out before the big day! And yes!! I'll totally send my bridesmaids your way, a few of them have been asking what to get me anyway 🥰\"",
+    "outcome": "referral",
+    "learned": null
+  },
+  {
+    "id": "act_msujp52z_4c4lx7",
+    "timestamp": 1786808586493,
+    "actor": "agent",
+    "action": "learned",
+    "target": "Olivia Marsh",
+    "reasoning": "For close contacts amid a major life event (like a wedding), explicitly inviting them to refer people in their event's circle using a friends & family discount link drives referrals.",
+    "outcome": "referral",
+    "learned": "For close contacts amid a major life event (like a wedding), explicitly inviting them to refer people in their event's circle using a friends & family discount link drives referrals."
+  },
+  {
+    "id": "act_msujwu48_a4cfwy",
+    "timestamp": 1786808945528,
+    "actor": "user",
+    "action": "settings_changed",
+    "target": "guardrails",
+    "reasoning": "Settings updated: mode",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msujwu4l_scv5xv",
+    "timestamp": 1786808945541,
+    "actor": "autopilot",
+    "action": "deferred_to_human",
+    "target": "Chris Jessup",
+    "reasoning": "Close-tier contacts always require human approval, regardless of autopilot settings.",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msujwz5c_udzp6p",
+    "timestamp": 1786808952048,
+    "actor": "user",
+    "action": "settings_changed",
+    "target": "guardrails",
+    "reasoning": "Settings updated: maxSendsPerDay",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msujx149_zdi6i1",
+    "timestamp": 1786808954601,
+    "actor": "user",
+    "action": "settings_changed",
+    "target": "guardrails",
+    "reasoning": "Settings updated: maxSendsPerDay",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msujx5z4_ynhl21",
+    "timestamp": 1786808960896,
+    "actor": "autopilot",
+    "action": "deferred_to_human",
+    "target": "Chris Jessup",
+    "reasoning": "Close-tier contacts always require human approval, regardless of autopilot settings.",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msujy6xa_fgwgim",
+    "timestamp": 1786809008782,
+    "actor": "user",
+    "action": "settings_changed",
+    "target": "guardrails",
+    "reasoning": "Settings updated: mode",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msujzi4e_vobsf1",
+    "timestamp": 1786809069950,
+    "actor": "agent",
+    "action": "proposed_followup",
+    "target": "Chris Jessup",
+    "reasoning": "Chris isn't a personal fit for candles, so the playbook calls for leading with a referral ask while still including a soft direct option; opening with his engineering workload keeps the relationship-first close-tier rule intact.",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msujzn83_5ucxx4",
+    "timestamp": 1786809076563,
+    "actor": "autopilot",
+    "action": "cycle_skipped",
+    "target": "all",
+    "reasoning": "Autopilot cycle requested but mode is set to propose.",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msujzprm_xf2xeo",
+    "timestamp": 1786809079858,
+    "actor": "agent",
+    "action": "proposed_followup",
+    "target": "Chris Jessup",
+    "reasoning": "Chris explicitly said candles aren't his thing, so per the ask-style rule I lead with a referral ask instead of a direct buy, while still opening with a personal check-in on his engineering work per the close-tier rule.",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msuk00o7_46hrr1",
+    "timestamp": 1786809093991,
+    "actor": "user",
+    "action": "settings_changed",
+    "target": "guardrails",
+    "reasoning": "Settings updated: mode",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msuk00oj_vb507h",
+    "timestamp": 1786809094003,
+    "actor": "autopilot",
+    "action": "deferred_to_human",
+    "target": "Chris Jessup",
+    "reasoning": "Close-tier contacts always require human approval, regardless of autopilot settings.",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msuk00pf_tjm6xj",
+    "timestamp": 1786809094035,
+    "actor": "user",
+    "action": "settings_changed",
+    "target": "guardrails",
+    "reasoning": "Settings updated: mode",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msuk28gt_wz2fjt",
+    "timestamp": 1786809197405,
+    "actor": "user",
+    "action": "rejected",
+    "target": "Chris Jessup",
+    "reasoning": "If my offering clearly isn't somebody else's interest, I would like you to ask them a little more directly if they know anybody that would be interested. Just so that there is a direct ask rather than \"I don't need anything now, but in the future let me know,\" which will probably not yield anything.",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msuk2itu_q2hrwi",
+    "timestamp": 1786809210835,
+    "actor": "agent",
+    "action": "learned",
+    "target": "Chris Jessup",
+    "reasoning": "When a contact clearly isn't a personal fit, the referral ask should be a direct, specific question rather than a passive 'let me know if you ever come across someone' offer, which yields little action.",
+    "outcome": null,
+    "learned": "When a contact clearly isn't a personal fit, the referral ask should be a direct, specific question rather than a passive 'let me know if you ever come across someone' offer, which yields little action."
+  },
+  {
+    "id": "act_msuk6uug_6stju6",
+    "timestamp": 1786809413032,
+    "actor": "user",
+    "action": "settings_changed",
+    "target": "guardrails",
+    "reasoning": "Settings updated: mode",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msuk6uuq_46y85y",
+    "timestamp": 1786809413042,
+    "actor": "autopilot",
+    "action": "deferred_to_human",
+    "target": "Chris Jessup",
+    "reasoning": "Close-tier contacts always require human approval, regardless of autopilot settings.",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msuk855z_vyvuuc",
+    "timestamp": 1786809473063,
+    "actor": "autopilot",
+    "action": "deferred_to_human",
+    "target": "Chris Jessup",
+    "reasoning": "Close-tier contacts always require human approval, regardless of autopilot settings.",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msuk9bvk_3h0epn",
+    "timestamp": 1786809528416,
+    "actor": "user",
+    "action": "settings_changed",
+    "target": "guardrails",
+    "reasoning": "Settings updated: mode",
+    "outcome": null,
+    "learned": null
+  },
+  {
+    "id": "act_msukarkg_p6gx9q",
+    "timestamp": 1786809595408,
+    "actor": "user",
+    "action": "settings_changed",
+    "target": "guardrails",
+    "reasoning": "Settings updated: mode",
+    "outcome": null,
+    "learned": null
+  }
+]

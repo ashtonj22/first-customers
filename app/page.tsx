@@ -1,69 +1,151 @@
-import Image from "next/image";
+"use client";
+
+import { useEffect, useState } from "react";
+import type { Contact, ScoreBreakdown, Settings } from "@/lib/types";
+import Header from "@/components/Header";
+import StatsStrip from "@/components/StatsStrip";
+import AutopilotBar from "@/components/AutopilotBar";
+import NextBestActions from "@/components/NextBestActions";
+import Conversations from "@/components/Conversations";
+import PlaybookPanel from "@/components/PlaybookPanel";
+import NetworkPanel from "@/components/NetworkPanel";
+import ActivityPanel from "@/components/ActivityPanel";
+
+type RankedContact = Contact & { score: ScoreBreakdown };
+
+export type AutopilotRunResult = {
+  ran: boolean;
+  results: Array<{ contact: string; decision: string; reason: string }>;
+};
+
+const TABS = [
+  { key: "actions", label: "Next Best Actions" },
+  { key: "conversations", label: "Conversations" },
+  { key: "playbook", label: "Playbook" },
+  { key: "network", label: "Network" },
+  { key: "activity", label: "Activity" },
+] as const;
+
+type TabKey = (typeof TABS)[number]["key"];
 
 export default function Home() {
+  const [contacts, setContacts] = useState<Contact[]>([]);
+  const [ranked, setRanked] = useState<RankedContact[]>([]);
+  const [settings, setSettings] = useState<Settings | null>(null);
+  const [live, setLive] = useState(false);
+  const [tab, setTab] = useState<TabKey>("actions");
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  const refreshCore = () => {
+    fetch("/api/contacts")
+      .then((r) => r.json())
+      .then((data) => {
+        setContacts(data.contacts);
+        setRanked(data.ranked);
+      });
+  };
+
+  useEffect(() => {
+    refreshCore();
+    fetch("/api/settings")
+      .then((r) => r.json())
+      .then((data) => setSettings(data.settings));
+    fetch("/api/status")
+      .then((r) => r.json())
+      .then((data) => setLive(data.live));
+  }, [refreshKey]);
+
+  const bump = () => setRefreshKey((k) => k + 1);
+
+  const handleSettingsChange = async (patch: Partial<Settings>) => {
+    const res = await fetch("/api/settings", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(patch),
+    });
+    const data = await res.json();
+    setSettings(data.settings);
+  };
+
+  const handleReset = async () => {
+    await fetch("/api/reset", { method: "POST" });
+    setTab("actions");
+    bump();
+  };
+
+  const handleRunAutopilot = async (): Promise<AutopilotRunResult> => {
+    const res = await fetch("/api/autopilot", { method: "POST" });
+    const data = (await res.json()) as AutopilotRunResult;
+    bump();
+    return data;
+  };
+
+  // Autopilot heartbeat: while armed and not paused, run a cycle every 60s
+  // so the agent works proactively — guardrails still gate every send.
+  useEffect(() => {
+    if (settings?.mode !== "autopilot" || settings.paused) return;
+    const tick = setInterval(() => {
+      fetch("/api/autopilot", { method: "POST" }).then(() => bump());
+    }, 60_000);
+    return () => clearInterval(tick);
+  }, [settings?.mode, settings?.paused]);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <div className="flex min-h-screen flex-col">
+      <Header
+        settings={settings}
+        live={live}
+        onSettingsChange={handleSettingsChange}
+        onReset={handleReset}
+        onRunAutopilot={handleRunAutopilot}
+      />
+
+      <StatsStrip contacts={contacts} />
+
+      {settings?.mode === "autopilot" && (
+        <AutopilotBar
+          settings={settings}
+          onSettingsChange={handleSettingsChange}
+          onRunNow={handleRunAutopilot}
+          onGoToActivity={() => setTab("activity")}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+      )}
+
+      <main className="mx-auto w-full max-w-6xl flex-1 px-6 py-6">
+        <nav className="mb-6 flex flex-wrap gap-1 rounded-[2px] bg-muted p-1 text-sm">
+          {TABS.map((t) => (
+            <button
+              key={t.key}
+              onClick={() => setTab(t.key)}
+              className={`rounded-[2px] px-4 py-1.5 font-medium transition-colors ${
+                tab === t.key
+                  ? "border border-border bg-card text-foreground"
+                  : "text-sage-foreground hover:text-foreground"
+              }`}
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+              {t.label}
+            </button>
+          ))}
+        </nav>
+
+        {tab === "actions" && (
+          <NextBestActions
+            ranked={ranked}
+            onDataChanged={bump}
+            onGoToConversations={() => setTab("conversations")}
+          />
+        )}
+        {tab === "conversations" && (
+          <Conversations refreshKey={refreshKey} onDataChanged={bump} />
+        )}
+        {tab === "playbook" && <PlaybookPanel refreshKey={refreshKey} />}
+        {tab === "network" && <NetworkPanel contacts={contacts} />}
+        {tab === "activity" && <ActivityPanel refreshKey={refreshKey} />}
       </main>
+
+      <footer className="border-t border-border py-4 text-center text-xs text-muted-foreground">
+        First Customers — a hackathon prototype for MadeThis. No real messages are sent; everything is simulated.
+      </footer>
     </div>
   );
 }

@@ -1,26 +1,89 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fcfbf7;
+  --card: #ffffff;
+  --foreground: #373532;
+  --primary: #2b2627;
+  --primary-foreground: #fff7ed;
+  --primary-hover: #1a1717;
+  --muted: #f2efeb;
+  --muted-foreground: #8b8783;
+  --border: #e5e4df;
+  --input: #d6d3cf;
+  --accent: #5a6e42;
+  --ring: #5a6e42;
+  --destructive: #c95454;
+  --surface-sage: #e9edda;
+  --sage-foreground: #5a6e42;
+  --sage-border: #d3dabf;
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-card: var(--card);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--primary-hover);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-accent: var(--accent);
+  --color-ring: var(--ring);
+  --color-destructive: var(--destructive);
+  --color-sage: var(--surface-sage);
+  --color-sage-foreground: var(--sage-foreground);
+  --color-sage-border: var(--sage-border);
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-inria-serif);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+::selection {
+  background: var(--accent);
+  color: white;
+}
+
+@keyframes learnedFlash {
+  0% {
+    background-color: rgba(90, 110, 66, 0.18);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.learned-flash {
+  animation: learnedFlash 2.4s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.25s ease-out;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: var(--input);
+  border-radius: 999px;
 }

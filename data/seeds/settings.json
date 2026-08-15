@@ -1,0 +1,7 @@
+{
+  "mode": "propose",
+  "paused": false,
+  "maxSendsPerDay": 5,
+  "allowedTiers": ["warm", "acquaintance"],
+  "quietHours": { "start": "21:00", "end": "08:00" }
+}

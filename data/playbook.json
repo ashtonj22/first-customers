@@ -1,0 +1,98 @@
+{
+  "globalRules": [
+    "Always reference a specific detail from the contact's notes so the message feels personal, not templated.",
+    "Keep first-touch messages short — three sentences or fewer.",
+    "Every message needs a clear primary ask (try it or buy it), and a referral ask only where it fits naturally.",
+    "When offering to 'send' or 'give' a product, make the exact nature of the offer explicit (e.g. free sample/referral opportunity, friends and family discount, or purchase link) — don't leave it ambiguous whether it's a gift or a sale.",
+    "Don't blend gift language ('send you', 'give you') with discount/pricing language ('my family discount') in the same offer — pick one framing explicitly: either 'this one's on me, no charge' (free gift) or 'here's my friends & family discount link' (paid, discounted). Mixing both leaves the recipient unsure if they'll be charged."
+  ],
+  "tierRules": {
+    "close": [
+      "For close contacts, lead with the relationship — ask about their life before mentioning Ember & Oak.",
+      "When a close contact is going through a major life event (wedding, baby, big milestone), explicitly ask them to refer people in their event's orbit (bridesmaids, guests, etc.) with a friends & family discount link — these moments are natural referral goldmines."
+    ],
+    "warm": [
+      "For warm contacts, reference the specific shared context (how you know them) before mentioning the product."
+    ],
+    "acquaintance": [
+      "Keep acquaintance messages low-pressure and easy to ignore — no hard call-to-action, no urgency language."
+    ]
+  },
+  "timing": [
+    "Wait at least 3 days after a reply before sending a follow-up."
+  ],
+  "askStyle": [
+    "Default to a direct ask (try it / buy it) unless the contact's notes suggest they're not a personal fit — then lead with a referral ask instead.",
+    "When the referral ask is the lead (because the contact isn't a personal fit), make it a direct, specific question — e.g. 'Do you know anyone who'd love this?' — rather than a passive, open-ended offer like 'if you ever cross paths with someone...' or 'let me know in the future,' which rarely prompts action."
+  ],
+  "contactInsights": {
+    "c07": [
+      "Olivia is currently in wedding planning mode — she's a strong referral source for bridesmaids and wedding guests looking for gift ideas."
+    ]
+  },
+  "changelog": [
+    {
+      "id": "seed-1",
+      "timestamp": 0,
+      "trigger": "seed",
+      "insight": "Starting playbook seeded from Maya's launch instincts.",
+      "ruleChanged": "initial",
+      "before": null,
+      "after": "Playbook initialized with 4 starter rule groups."
+    },
+    {
+      "id": "log_msujb5c8_5zn8n6",
+      "timestamp": 1786807933641,
+      "trigger": "outcome",
+      "insight": "Nina Alvarez (close, former roommate) converted on the referral ask rather than the direct purchase ask, suggesting she's more valuable as a connector given her social/hosting profile.",
+      "ruleChanged": "contactInsights.c13",
+      "before": null,
+      "after": "Nina Alvarez responded to a combined direct+referral ask with a referral rather than a purchase — she's a well-connected host/entertainer type, so lean into the referral ask with her (she may be more valuable as a connector than a direct buyer)."
+    },
+    {
+      "id": "log_msujcwed_cs6ni3",
+      "timestamp": 1786808015365,
+      "trigger": "edit",
+      "insight": "Maya softened a referral ask from an imperative command ('send them my way') to a casual curious question ('I'm curious if you know anyone who would love them?!'), showing that referral asks — even to close contacts who aren't a personal fit — should feel low-pressure and conversational rather than direct requests.",
+      "ruleChanged": "askStyle",
+      "before": "Default to a direct ask (try it / buy it) unless the contact's notes suggest they're not a personal fit — then lead with a referral ask instead.",
+      "after": "Default to a direct ask (try it / buy it) unless the contact's notes suggest they're not a personal fit — then lead with a referral ask instead. When leading with a referral ask (not-a-personal-fit case), phrase it as a casual, curious question rather than an imperative request — keep it low-pressure even for close/warm contacts."
+    },
+    {
+      "id": "log_msujdr0t_1z682w",
+      "timestamp": 1786808055053,
+      "trigger": "outcome",
+      "insight": "For close contacts, tying the product ask to a known life event (like a wedding registry) and pairing it with an explicit friends & family discount offer led to a purchase, reinforcing the value of a natural relationship-to-ask transition.",
+      "ruleChanged": "tierRules.close",
+      "before": "For close contacts, lead with the relationship — ask about their life before mentioning Ember & Oak.",
+      "after": "For close contacts, lead with the relationship — ask about their life before mentioning Ember & Oak. If the contact has a known life event (wedding, move, new baby, etc.), tie the product ask directly to that event (e.g. registry, housewarming) and pair it with an explicit friends & family discount offer — this makes the transition from relationship talk to the ask feel natural and has driven purchases."
+    },
+    {
+      "id": "log_msujffsu_0twr9r",
+      "timestamp": 1786808133822,
+      "trigger": "rejection",
+      "insight": "Maya rejected a message to her sister because mixing 'send you something' (gift framing) with 'my family discount' (paid framing) in the same offer made it unclear whether she'd be charged; this ambiguity risk applies to all messages, not just close-tier ones.",
+      "ruleChanged": "globalRules",
+      "before": "When offering to 'send' or 'give' a product, make the exact nature of the offer explicit (e.g. free sample/referral opportunity, friends and family discount, or purchase link) — don't leave it ambiguous whether it's a gift or a sale.",
+      "after": "Added new global rule: Don't blend gift language ('send you', 'give you') with discount/pricing language ('my family discount') in the same offer — pick one framing explicitly: either 'this one's on me, no charge' (free gift) or 'here's my friends & family discount link' (paid, discounted). Mixing both leaves the recipient unsure if they'll be charged."
+    },
+    {
+      "id": "log_msujp52y_xf7jxn",
+      "timestamp": 1786808586490,
+      "trigger": "outcome",
+      "insight": "For close contacts amid a major life event (like a wedding), explicitly inviting them to refer people in their event's circle using a friends & family discount link drives referrals.",
+      "ruleChanged": "tierRules.close + contactInsights.c07",
+      "before": null,
+      "after": "When a close contact is going through a major life event (wedding, baby, big milestone), explicitly ask them to refer people in their event's orbit (bridesmaids, guests, etc.) with a friends & family discount link — these moments are natural referral goldmines."
+    },
+    {
+      "id": "log_msuk2itt_er203n",
+      "timestamp": 1786809210833,
+      "trigger": "rejection",
+      "insight": "When a contact clearly isn't a personal fit, the referral ask should be a direct, specific question rather than a passive 'let me know if you ever come across someone' offer, which yields little action.",
+      "ruleChanged": "askStyle",
+      "before": "Default to a direct ask (try it / buy it) unless the contact's notes suggest they're not a personal fit — then lead with a referral ask instead.",
+      "after": "Added: When the referral ask is the lead (because the contact isn't a personal fit), make it a direct, specific question — e.g. 'Do you know anyone who'd love this?' — rather than a passive, open-ended offer like 'if you ever cross paths with someone...' or 'let me know in the future,' which rarely prompts action."
+    }
+  ]
+}

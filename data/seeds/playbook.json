@@ -1,0 +1,36 @@
+{
+  "globalRules": [
+    "Always reference a specific detail from the contact's notes so the message feels personal, not templated.",
+    "Keep first-touch messages short \u2014 three sentences or fewer.",
+    "Every message needs a clear primary ask (try it or buy it), and a referral ask only where it fits naturally."
+  ],
+  "tierRules": {
+    "close": [
+      "For close contacts, lead with the relationship \u2014 ask about their life before mentioning Ember & Oak."
+    ],
+    "warm": [
+      "For warm contacts, reference the specific shared context (how you know them) before mentioning the product."
+    ],
+    "acquaintance": [
+      "Keep acquaintance messages low-pressure and easy to ignore \u2014 no hard call-to-action, no urgency language."
+    ]
+  },
+  "timing": [
+    "Wait at least 3 days after a reply before sending a follow-up."
+  ],
+  "askStyle": [
+    "Default to a direct ask (try it / buy it) unless the contact's notes suggest they're not a personal fit \u2014 then lead with a referral ask instead."
+  ],
+  "contactInsights": {},
+  "changelog": [
+    {
+      "id": "seed-1",
+      "timestamp": 0,
+      "trigger": "seed",
+      "insight": "Starting playbook seeded from Maya's launch instincts.",
+      "ruleChanged": "initial",
+      "before": null,
+      "after": "Playbook initialized with 4 starter rule groups."
+    }
+  ]
+}

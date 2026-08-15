@@ -1,0 +1,13 @@
+{
+  "mode": "autopilot",
+  "paused": false,
+  "maxSendsPerDay": 3,
+  "allowedTiers": [
+    "warm",
+    "acquaintance"
+  ],
+  "quietHours": {
+    "start": "21:00",
+    "end": "08:00"
+  }
+}

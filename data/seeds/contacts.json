@@ -1,0 +1,250 @@
+[
+  {
+    "id": "c01",
+    "name": "Jess Kane",
+    "relationship": "college roommate",
+    "closenessTier": "close",
+    "lastContactDaysAgo": 12,
+    "notes": "Hosts dinner parties almost every month, loves cozy aesthetics",
+    "status": "not_contacted",
+    "personaTraits": {
+      "responsiveness": 0.95,
+      "productInterest": 0.9,
+      "tonePreference": "casual",
+      "referralLikelihood": 0.4,
+      "quirk": "Hates being sold to by friends but is an easy yes if it feels like a real recommendation",
+      "salesySensitive": true
+    }
+  },
+  {
+    "id": "c02",
+    "name": "Mia Jessup",
+    "relationship": "sister",
+    "closenessTier": "close",
+    "lastContactDaysAgo": 4,
+    "notes": "Just had a baby and is deep in self-care-starved new-mom mode",
+    "status": "not_contacted",
+    "personaTraits": {
+      "responsiveness": 0.97,
+      "productInterest": 0.92,
+      "tonePreference": "warm",
+      "referralLikelihood": 0.3,
+      "quirk": "Will buy almost anything from Maya but responds best to genuine check-ins"
+    }
+  },
+  {
+    "id": "c03",
+    "name": "Priya Anand",
+    "relationship": "former coworker",
+    "closenessTier": "warm",
+    "lastContactDaysAgo": 46,
+    "notes": "Just moved into a new house, mentioned wanting it to feel more like home",
+    "status": "not_contacted",
+    "personaTraits": {
+      "responsiveness": 0.7,
+      "productInterest": 0.75,
+      "tonePreference": "warm",
+      "referralLikelihood": 0.35,
+      "quirk": "Loves housewarming-flavored gift ideas"
+    }
+  },
+  {
+    "id": "c04",
+    "name": "Sam Ortega",
+    "relationship": "gym friend",
+    "closenessTier": "warm",
+    "lastContactDaysAgo": 20,
+    "notes": "Minimalist, into fitness and gear, not really a home-decor person",
+    "status": "not_contacted",
+    "personaTraits": {
+      "responsiveness": 0.55,
+      "productInterest": 0.15,
+      "tonePreference": "direct",
+      "referralLikelihood": 0.1,
+      "quirk": "Polite but will just go quiet if it's not relevant to him"
+    }
+  },
+  {
+    "id": "c05",
+    "name": "Dana Whitfield",
+    "relationship": "neighbor",
+    "closenessTier": "warm",
+    "lastContactDaysAgo": 15,
+    "notes": "Runs the block's book club, loves picking out thoughtful gifts",
+    "status": "not_contacted",
+    "personaTraits": {
+      "responsiveness": 0.8,
+      "productInterest": 0.7,
+      "tonePreference": "warm",
+      "referralLikelihood": 0.5,
+      "quirk": "Says yes fast if it sounds like something she can gift to the book club"
+    }
+  },
+  {
+    "id": "c06",
+    "name": "Tom Reyes",
+    "relationship": "college friend",
+    "closenessTier": "warm",
+    "lastContactDaysAgo": 70,
+    "notes": "Not really a candle person, but his girlfriend Kayla is obsessed with home fragrance",
+    "status": "not_contacted",
+    "personaTraits": {
+      "responsiveness": 0.65,
+      "productInterest": 0.2,
+      "tonePreference": "direct",
+      "referralLikelihood": 0.95,
+      "quirk": "Will almost always redirect to Kayla instead of buying himself",
+      "referralTrigger": true,
+      "referralName": "Kayla Simmons",
+      "referralRelationship": "his girlfriend"
+    }
+  },
+  {
+    "id": "c07",
+    "name": "Olivia Marsh",
+    "relationship": "cousin",
+    "closenessTier": "close",
+    "lastContactDaysAgo": 25,
+    "notes": "Getting married next spring, loves boho aesthetic and registry-style gifts",
+    "status": "not_contacted",
+    "personaTraits": {
+      "responsiveness": 0.85,
+      "productInterest": 0.8,
+      "tonePreference": "warm",
+      "referralLikelihood": 0.3,
+      "quirk": "Excited about anything wedding-adjacent right now"
+    }
+  },
+  {
+    "id": "c08",
+    "name": "Carlos Nguyen",
+    "relationship": "former coworker",
+    "closenessTier": "acquaintance",
+    "lastContactDaysAgo": 210,
+    "notes": "Went through a divorce recently, has been a little withdrawn",
+    "status": "not_contacted",
+    "personaTraits": {
+      "responsiveness": 0.4,
+      "productInterest": 0.25,
+      "tonePreference": "direct",
+      "referralLikelihood": 0.1,
+      "quirk": "Opts out immediately if a message feels like a sales pitch",
+      "salesySensitive": true
+    }
+  },
+  {
+    "id": "c09",
+    "name": "Grace Liu",
+    "relationship": "high school friend",
+    "closenessTier": "warm",
+    "lastContactDaysAgo": 33,
+    "notes": "Big into self-care Sundays, always posting bath and candle setups",
+    "status": "not_contacted",
+    "personaTraits": {
+      "responsiveness": 0.88,
+      "productInterest": 0.85,
+      "tonePreference": "casual",
+      "referralLikelihood": 0.4,
+      "quirk": "Loves subscription-style products she can look forward to monthly"
+    }
+  },
+  {
+    "id": "c10",
+    "name": "Ben Okafor",
+    "relationship": "neighbor",
+    "closenessTier": "acquaintance",
+    "lastContactDaysAgo": 90,
+    "notes": "Very practical, not into home decor, but his sister runs a lot of dinner parties",
+    "status": "not_contacted",
+    "personaTraits": {
+      "responsiveness": 0.5,
+      "productInterest": 0.15,
+      "tonePreference": "direct",
+      "referralLikelihood": 0.9,
+      "quirk": "Almost always points people to his sister Marcus... actually his sister Renee",
+      "referralTrigger": true,
+      "referralName": "Renee Okafor",
+      "referralRelationship": "his sister"
+    }
+  },
+  {
+    "id": "c11",
+    "name": "Ashley Byrne",
+    "relationship": "book club friend",
+    "closenessTier": "warm",
+    "lastContactDaysAgo": 18,
+    "notes": "Recently moved and is slowly redecorating room by room",
+    "status": "not_contacted",
+    "personaTraits": {
+      "responsiveness": 0.78,
+      "productInterest": 0.72,
+      "tonePreference": "warm",
+      "referralLikelihood": 0.25,
+      "quirk": "Loves a good before/after home update"
+    }
+  },
+  {
+    "id": "c12",
+    "name": "Derek Holt",
+    "relationship": "gym friend",
+    "closenessTier": "acquaintance",
+    "lastContactDaysAgo": 130,
+    "notes": "Rarely replies to texts, mostly communicates in person at the gym",
+    "status": "not_contacted",
+    "personaTraits": {
+      "responsiveness": 0.2,
+      "productInterest": 0.3,
+      "tonePreference": "direct",
+      "referralLikelihood": 0.1,
+      "quirk": "Will almost always leave a text on read"
+    }
+  },
+  {
+    "id": "c13",
+    "name": "Nina Alvarez",
+    "relationship": "former roommate",
+    "closenessTier": "close",
+    "lastContactDaysAgo": 8,
+    "notes": "Hosts dinner parties constantly and is obsessed with aesthetic details",
+    "status": "not_contacted",
+    "personaTraits": {
+      "responsiveness": 0.9,
+      "productInterest": 0.88,
+      "tonePreference": "casual",
+      "referralLikelihood": 0.6,
+      "quirk": "Will buy for herself and immediately think of two friends who'd love it too"
+    }
+  },
+  {
+    "id": "c14",
+    "name": "Chris Jessup",
+    "relationship": "brother-in-law",
+    "closenessTier": "close",
+    "lastContactDaysAgo": 5,
+    "notes": "Practical engineer type, not really into candles, but supportive of Maya's business",
+    "status": "not_contacted",
+    "personaTraits": {
+      "responsiveness": 0.75,
+      "productInterest": 0.2,
+      "tonePreference": "direct",
+      "referralLikelihood": 0.2,
+      "quirk": "Will reply supportively but rarely converts himself"
+    }
+  },
+  {
+    "id": "c15",
+    "name": "Whitney Park",
+    "relationship": "mastermind friend",
+    "closenessTier": "warm",
+    "lastContactDaysAgo": 27,
+    "notes": "Runs her own small business and always tries to support other founders' launches",
+    "status": "not_contacted",
+    "personaTraits": {
+      "responsiveness": 0.86,
+      "productInterest": 0.78,
+      "tonePreference": "warm",
+      "referralLikelihood": 0.7,
+      "quirk": "Loves to shout out small businesses to her own network"
+    }
+  }
+]
