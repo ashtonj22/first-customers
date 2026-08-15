@@ -1,8 +1,8 @@
 {
   "globalRules": [
-    "Always reference a specific detail from the contact's notes so the message feels personal, not templated.",
+    "Relationships first: open every message with a personal component \u2014 a genuine question about how they're doing, or a specific interest or detail you know about them (e.g. Jess hosts dinner parties, so 'thought of you because\u2026'). The person always comes before the product.",
     "Keep first-touch messages short \u2014 three sentences or fewer.",
-    "Every message needs a clear primary ask (try it or buy it), and a referral ask only where it fits naturally."
+    "After the personal opener, make exactly ONE clear ask. Default: invite them to try or buy the product. If you know the product isn't their thing but they're well-connected, ask instead who they know that might love it."
   ],
   "tierRules": {
     "close": [
@@ -19,7 +19,8 @@
     "Wait at least 3 days after a reply before sending a follow-up."
   ],
   "askStyle": [
-    "Default to a direct ask (try it / buy it) unless the contact's notes suggest they're not a personal fit \u2014 then lead with a referral ask instead."
+    "Default to a direct ask (try it / buy it) unless the contact's notes suggest they're not a personal fit \u2014 then lead with a referral ask instead.",
+    "The moment someone says they'll purchase (or just did), that's the prime moment to ask who else they know who would love this \u2014 gratitude plus a referral ask, never a re-pitch."
   ],
   "contactInsights": {},
   "changelog": [
