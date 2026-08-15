@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import type { Settings } from "@/lib/types";
 
 export default function Header({
@@ -57,24 +58,27 @@ export default function Header({
         <div className="flex flex-wrap items-center gap-3">
           {settings && (
             <>
-              <div className="flex items-center gap-1 rounded-[2px] bg-muted p-1 text-sm">
-                {(["propose", "autopilot"] as const).map((m) => (
-                  <button
-                    key={m}
-                    onClick={() => {
-                      onSettingsChange({ mode: m });
-                      if (m === "autopilot") onRunAutopilot();
-                    }}
-                    className={`rounded-[2px] px-3 py-1 font-medium capitalize transition-colors ${
-                      settings.mode === m
-                        ? "bg-primary text-primary-foreground"
-                        : "text-muted-foreground hover:text-foreground"
+              <label className="flex items-center gap-2 text-sm text-foreground">
+                <span className="font-medium">Autopilot</span>
+                <button
+                  role="switch"
+                  aria-checked={settings.mode === "autopilot"}
+                  onClick={() => {
+                    const next = settings.mode === "autopilot" ? "propose" : "autopilot";
+                    onSettingsChange({ mode: next });
+                    if (next === "autopilot") onRunAutopilot();
+                  }}
+                  className={`relative h-6 w-11 shrink-0 rounded-full transition-colors ${
+                    settings.mode === "autopilot" ? "bg-sage-foreground" : "bg-muted"
+                  }`}
+                >
+                  <span
+                    className={`absolute left-0 top-0.5 h-5 w-5 rounded-full bg-card shadow transition-transform ${
+                      settings.mode === "autopilot" ? "translate-x-[22px]" : "translate-x-0.5"
                     }`}
-                  >
-                    {m}
-                  </button>
-                ))}
-              </div>
+                  />
+                </button>
+              </label>
 
               <label className="flex items-center gap-2 text-sm text-foreground">
                 <span className="hidden sm:inline">Pause</span>
@@ -82,19 +86,26 @@ export default function Header({
                   role="switch"
                   aria-checked={settings.paused}
                   onClick={() => onSettingsChange({ paused: !settings.paused })}
-                  className={`relative h-6 w-11 rounded-full transition-colors ${
+                  className={`relative h-6 w-11 shrink-0 rounded-full transition-colors ${
                     settings.paused ? "bg-accent" : "bg-muted"
                   }`}
                 >
                   <span
-                    className={`absolute top-0.5 h-5 w-5 rounded-full bg-card shadow transition-transform ${
-                      settings.paused ? "translate-x-5" : "translate-x-0.5"
+                    className={`absolute left-0 top-0.5 h-5 w-5 rounded-full bg-card shadow transition-transform ${
+                      settings.paused ? "translate-x-[22px]" : "translate-x-0.5"
                     }`}
                   />
                 </button>
               </label>
             </>
           )}
+
+          <Link
+            href="/onboarding"
+            className="text-xs text-muted-foreground underline-offset-2 hover:text-foreground hover:underline"
+          >
+            Onboarding demo
+          </Link>
 
           <button
             onClick={handleReset}

@@ -73,16 +73,16 @@ export default function ProposeCard({
         </div>
       </div>
 
-      {/* iMessage-style bubble */}
+      {/* iMessage-style bubble; editing expands to the full card width */}
       <div className="mt-4 flex justify-end">
-        <div className="max-w-[85%]">
+        <div className={editing ? "w-full" : "max-w-[85%]"}>
           {editing ? (
             <textarea
               autoFocus
               value={text}
               onChange={(e) => setText(e.target.value)}
-              rows={4}
-              className="w-full rounded-2xl rounded-br-sm bg-muted p-3 text-[15px] leading-snug text-foreground outline-none ring-1 ring-accent/40 focus:ring-2 focus:ring-accent"
+              rows={Math.max(8, Math.ceil(text.length / 60))}
+              className="w-full rounded-lg bg-muted p-4 text-[15px] leading-relaxed text-foreground outline-none ring-1 ring-accent/40 focus:ring-2 focus:ring-accent"
             />
           ) : (
             <div className="rounded-2xl rounded-br-sm bg-accent px-4 py-2.5 text-[15px] leading-snug text-white">
