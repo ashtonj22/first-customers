@@ -37,6 +37,20 @@ export function freshState(): State {
   }) as unknown as State;
 }
 
+/**
+ * Sessions persisted before a playbook section existed are missing it entirely,
+ * and every consumer maps over these arrays unguarded. Backfill on load so a
+ * schema addition never breaks a visitor mid-demo.
+ */
+function normalizePlaybook(playbook: Playbook): Playbook {
+  const stage = playbook.stageRules ?? { firstTouch: [], followUp: [] };
+  playbook.stageRules = {
+    firstTouch: Array.isArray(stage.firstTouch) ? stage.firstTouch : [],
+    followUp: Array.isArray(stage.followUp) ? stage.followUp : [],
+  };
+  return playbook;
+}
+
 interface Backend {
   load(sessionId: string): Promise<State | null>;
   save(sessionId: string, state: State): Promise<void>;
@@ -117,9 +131,21 @@ const memoryBackend: Backend = {
   },
 };
 
+/**
+ * Deployed: a blob per visitor, or memory if no store is attached yet.
+ * Local: always the JSON files.
+ *
+ * The blob token has to be checked *inside* the deployed branch. Attaching a
+ * Blob store also writes BLOB_READ_WRITE_TOKEN into `.env.local`, so a
+ * token-first check silently moves local dev onto the blob backend — whose
+ * `load()` treats every failure as "no blob yet" and restarts from the seeds.
+ * The symptom is that nothing a developer does locally ever sticks, which reads
+ * exactly like the agent refusing to learn.
+ */
 function pickBackend(): Backend {
-  if (process.env.BLOB_READ_WRITE_TOKEN) return blobBackend;
-  if (process.env.VERCEL) return memoryBackend;
+  if (process.env.VERCEL) {
+    return process.env.BLOB_READ_WRITE_TOKEN ? blobBackend : memoryBackend;
+  }
   return fileBackend;
 }
 
@@ -171,6 +197,7 @@ export function withStore<Args extends unknown[]>(
     const id = await sessionId();
     const backend = pickBackend();
     const state = (await backend.load(id)) ?? freshState();
+    normalizePlaybook(state.playbook);
     const ctx: StoreContext = { state, dirty: false };
 
     return context.run(ctx, async () => {

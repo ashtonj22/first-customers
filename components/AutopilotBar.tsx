@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { ClosenessTier, Settings } from "@/lib/types";
-import type { AutopilotRunResult } from "@/app/page";
+import type { AutopilotRunResult } from "@/app/dashboard/page";
 
 const TIERS: ClosenessTier[] = ["close", "warm", "acquaintance"];
 

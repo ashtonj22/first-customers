@@ -1,9 +1,16 @@
 {
   "globalRules": [
     "Relationships first: open every message with a personal component \u2014 a genuine question about how they're doing, or a specific interest or detail you know about them (e.g. Jess hosts dinner parties, so 'thought of you because\u2026'). The person always comes before the product.",
-    "Keep first-touch messages short \u2014 three sentences or fewer.",
     "After the personal opener, make exactly ONE clear ask. Default: invite them to try or buy the product. If you know the product isn't their thing but they're well-connected, ask instead who they know that might love it."
   ],
+  "stageRules": {
+    "firstTouch": [
+      "Keep first-touch messages short \u2014 three sentences or fewer."
+    ],
+    "followUp": [
+      "On a follow-up, continue the conversation they actually started \u2014 reference what they said rather than restating the original pitch."
+    ]
+  },
   "tierRules": {
     "close": [
       "For close contacts, lead with the relationship \u2014 ask about their life before mentioning Ember & Oak."
@@ -31,7 +38,7 @@
       "insight": "Starting playbook seeded from Maya's launch instincts.",
       "ruleChanged": "initial",
       "before": null,
-      "after": "Playbook initialized with 4 starter rule groups."
+      "after": "Playbook initialized with 5 starter rule groups."
     }
   ]
 }

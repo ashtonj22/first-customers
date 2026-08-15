@@ -7,12 +7,24 @@ async function handleGET() {
   return NextResponse.json({ playbook: getPlaybook() });
 }
 
-type Section = "globalRules" | "tierRules.close" | "tierRules.warm" | "tierRules.acquaintance" | "timing" | "askStyle";
+type Section =
+  | "globalRules"
+  | "stageRules.firstTouch"
+  | "stageRules.followUp"
+  | "tierRules.close"
+  | "tierRules.warm"
+  | "tierRules.acquaintance"
+  | "timing"
+  | "askStyle";
 
 function getSectionArray(pb: Playbook, section: Section): string[] {
   if (section.startsWith("tierRules.")) {
     const tier = section.split(".")[1] as "close" | "warm" | "acquaintance";
     return pb.tierRules[tier];
+  }
+  if (section.startsWith("stageRules.")) {
+    const stage = section.split(".")[1] as "firstTouch" | "followUp";
+    return pb.stageRules?.[stage] ?? [];
   }
   return pb[section as "globalRules" | "timing" | "askStyle"];
 }
@@ -21,6 +33,10 @@ function setSectionArray(pb: Playbook, section: Section, arr: string[]) {
   if (section.startsWith("tierRules.")) {
     const tier = section.split(".")[1] as "close" | "warm" | "acquaintance";
     pb.tierRules[tier] = arr;
+  } else if (section.startsWith("stageRules.")) {
+    const stage = section.split(".")[1] as "firstTouch" | "followUp";
+    if (!pb.stageRules) pb.stageRules = { firstTouch: [], followUp: [] };
+    pb.stageRules[stage] = arr;
   } else {
     (pb as unknown as Record<string, string[]>)[section] = arr;
   }

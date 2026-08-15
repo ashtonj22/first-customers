@@ -1,150 +1,115 @@
-"use client";
+import Link from "next/link";
 
-import { useEffect, useState } from "react";
-import type { Contact, ScoreBreakdown, Settings } from "@/lib/types";
-import Header from "@/components/Header";
-import StatsStrip from "@/components/StatsStrip";
-import AutopilotBar from "@/components/AutopilotBar";
-import NextBestActions from "@/components/NextBestActions";
-import Conversations from "@/components/Conversations";
-import PlaybookPanel from "@/components/PlaybookPanel";
-import NetworkPanel from "@/components/NetworkPanel";
-import ActivityPanel from "@/components/ActivityPanel";
+const PRINCIPLES = [
+  {
+    title: "The digital space is crowded",
+    body: "Ads and cold outreach get more expensive and less heard every month. A first-time founder can't win there.",
+  },
+  {
+    title: "Relationships are the fastest path to revenue",
+    body: "A message from someone you actually know converts on trust, not on ad spend. Word of mouth is the shortest line to a first sale.",
+  },
+  {
+    title: "People know people",
+    body: "Every warm contact is also a door to their network. Referrals compound — one sale becomes the next three.",
+  },
+];
 
-type RankedContact = Contact & { score: ScoreBreakdown };
-
-export type AutopilotRunResult = {
-  ran: boolean;
-  results: Array<{ contact: string; decision: string; reason: string }>;
-};
-
-const TABS = [
-  { key: "actions", label: "Next Best Actions" },
-  { key: "conversations", label: "Conversations" },
-  { key: "playbook", label: "Playbook" },
-  { key: "network", label: "Network" },
-  { key: "activity", label: "Activity" },
-] as const;
-
-type TabKey = (typeof TABS)[number]["key"];
-
-export default function Home() {
-  const [contacts, setContacts] = useState<Contact[]>([]);
-  const [ranked, setRanked] = useState<RankedContact[]>([]);
-  const [settings, setSettings] = useState<Settings | null>(null);
-  const [live, setLive] = useState(false);
-  const [tab, setTab] = useState<TabKey>("actions");
-  const [refreshKey, setRefreshKey] = useState(0);
-
-  const refreshCore = () => {
-    fetch("/api/contacts")
-      .then((r) => r.json())
-      .then((data) => {
-        setContacts(data.contacts);
-        setRanked(data.ranked);
-      });
-  };
-
-  useEffect(() => {
-    refreshCore();
-    fetch("/api/settings")
-      .then((r) => r.json())
-      .then((data) => setSettings(data.settings));
-    fetch("/api/status")
-      .then((r) => r.json())
-      .then((data) => setLive(data.live));
-  }, [refreshKey]);
-
-  const bump = () => setRefreshKey((k) => k + 1);
-
-  const handleSettingsChange = async (patch: Partial<Settings>) => {
-    const res = await fetch("/api/settings", {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(patch),
-    });
-    const data = await res.json();
-    setSettings(data.settings);
-  };
-
-  const handleReset = async () => {
-    await fetch("/api/reset", { method: "POST" });
-    setTab("actions");
-    bump();
-  };
-
-  const handleRunAutopilot = async (): Promise<AutopilotRunResult> => {
-    const res = await fetch("/api/autopilot", { method: "POST" });
-    const data = (await res.json()) as AutopilotRunResult;
-    bump();
-    return data;
-  };
-
-  // Autopilot heartbeat: while armed and not paused, run a cycle every 60s
-  // so the agent works proactively — guardrails still gate every send.
-  useEffect(() => {
-    if (settings?.mode !== "autopilot" || settings.paused) return;
-    const tick = setInterval(() => {
-      fetch("/api/autopilot", { method: "POST" }).then(() => bump());
-    }, 60_000);
-    return () => clearInterval(tick);
-  }, [settings?.mode, settings?.paused]);
-
+export default function IntroPage() {
   return (
-    <div className="flex min-h-screen flex-col">
-      <Header
-        settings={settings}
-        live={live}
-        onSettingsChange={handleSettingsChange}
-        onReset={handleReset}
-        onRunAutopilot={handleRunAutopilot}
-      />
+    <div className="flex min-h-screen flex-col bg-background">
+      <div className="mx-auto flex w-full max-w-3xl items-center justify-between px-6 py-6">
+        <span className="font-serif text-lg font-normal tracking-tight text-foreground">
+          First Customers
+        </span>
+        <span className="rounded-[2px] bg-sage px-2 py-0.5 text-[11px] font-medium uppercase tracking-wide text-sage-foreground">
+          MadeThis bounty
+        </span>
+      </div>
 
-      <StatsStrip contacts={contacts} />
+      <main className="mx-auto w-full max-w-3xl flex-1 px-6 pb-16">
+        <header className="mb-12">
+          <h1 className="mb-3 font-serif text-4xl font-normal leading-tight tracking-tight text-foreground">
+            Why I built it <em className="italic">this</em> way
+          </h1>
+          <p className="text-base text-muted-foreground">
+            Thirty seconds on the problem and the first principles behind it — then the demo.
+          </p>
+        </header>
 
-      {settings?.mode === "autopilot" && (
-        <AutopilotBar
-          settings={settings}
-          onSettingsChange={handleSettingsChange}
-          onRunNow={handleRunAutopilot}
-          onGoToActivity={() => setTab("activity")}
-        />
-      )}
+        <section className="mb-12">
+          <h2 className="mb-4 text-xs font-medium uppercase tracking-wider text-sage-foreground">
+            The problem
+          </h2>
+          <div className="space-y-4">
+            <p className="border-l-2 border-sage-border pl-4 text-[15px] leading-relaxed text-foreground">
+              <strong className="font-medium">MadeThis customers need revenue fast.</strong> Early
+              revenue is what makes the business viable — and what makes the subscription worth
+              renewing.
+            </p>
+            <p className="border-l-2 border-sage-border pl-4 text-[15px] leading-relaxed text-foreground">
+              <strong className="font-medium">They aren&apos;t one audience.</strong> Thousands of
+              makers selling wildly different things at wildly different stages. Any single canned
+              playbook fits almost none of them.
+            </p>
+          </div>
+        </section>
 
-      <main className="mx-auto w-full max-w-6xl flex-1 px-6 py-6">
-        <nav className="mb-6 flex flex-wrap gap-1 rounded-[2px] bg-muted p-1 text-sm">
-          {TABS.map((t) => (
-            <button
-              key={t.key}
-              onClick={() => setTab(t.key)}
-              className={`rounded-[2px] px-4 py-1.5 font-medium transition-colors ${
-                tab === t.key
-                  ? "border border-border bg-card text-foreground"
-                  : "text-sage-foreground hover:text-foreground"
-              }`}
-            >
-              {t.label}
-            </button>
-          ))}
-        </nav>
+        <section className="mb-12">
+          <h2 className="mb-4 text-xs font-medium uppercase tracking-wider text-sage-foreground">
+            GTM first principles
+          </h2>
+          <ol className="grid gap-3 sm:grid-cols-3">
+            {PRINCIPLES.map((p, i) => (
+              <li
+                key={p.title}
+                className="rounded-lg border border-border bg-card p-5 shadow-sm"
+              >
+                <span className="mb-3 flex h-6 w-6 items-center justify-center rounded-full bg-sage text-xs font-medium text-sage-foreground">
+                  {i + 1}
+                </span>
+                <h3 className="mb-1.5 text-sm font-medium text-foreground">{p.title}</h3>
+                <p className="text-[13px] leading-relaxed text-muted-foreground">{p.body}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
 
-        {tab === "actions" && (
-          <NextBestActions
-            ranked={ranked}
-            onDataChanged={bump}
-            onGoToConversations={() => setTab("conversations")}
-          />
-        )}
-        {tab === "conversations" && (
-          <Conversations refreshKey={refreshKey} onDataChanged={bump} />
-        )}
-        {tab === "playbook" && <PlaybookPanel refreshKey={refreshKey} />}
-        {tab === "network" && <NetworkPanel contacts={contacts} />}
-        {tab === "activity" && <ActivityPanel refreshKey={refreshKey} />}
+        <section className="mb-12">
+          <h2 className="mb-4 text-xs font-medium uppercase tracking-wider text-sage-foreground">
+            The strategy
+          </h2>
+          <div className="rounded-lg border border-sage-border bg-sage/50 p-6">
+            <p className="text-[15px] leading-relaxed text-foreground">
+              Shorten every founder&apos;s time to first revenue by giving them one
+              ultra-simplified, guided place to <strong className="font-medium">target</strong> the
+              contacts who matter,{" "}
+              <strong className="font-medium">reach out personally</strong>, and let the agent{" "}
+              <strong className="font-medium">learn from every response</strong> — so the machine
+              improves itself with each send, whatever the founder happens to sell.
+            </p>
+          </div>
+        </section>
+
+        <div className="flex flex-wrap items-center gap-5">
+          <Link
+            href="/onboarding"
+            className="rounded-[2px] bg-primary px-6 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary-hover"
+          >
+            Enter the demo →
+          </Link>
+          <Link
+            href="/dashboard"
+            className="text-sm text-muted-foreground underline-offset-2 hover:text-foreground hover:underline"
+          >
+            Skip to the agent
+          </Link>
+        </div>
       </main>
 
       <footer className="border-t border-border py-4 text-center text-xs text-muted-foreground">
-        First Customers — a hackathon prototype for MadeThis. No real messages are sent; everything is simulated.
+        First Customers — a hackathon prototype for MadeThis. No real messages are sent; everything
+        is simulated.
       </footer>
     </div>
   );

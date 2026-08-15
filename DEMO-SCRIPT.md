@@ -1,6 +1,9 @@
 # Demo Script — 3–5 minutes
 
-> Before recording: click **Reset demo** (top right). Confirm the green `live` badge (API key active). Stay in **Propose** mode.
+> Before recording: open `/dashboard`, click **Reset demo** (top right), confirm the green `live` badge (API key active), stay in **Propose** mode — then go back to `/` to start.
+
+## Beat 0 — Why this way (the intro screen)
+Landing page `/`: the problem (MadeThis founders need revenue fast, and they're not one audience), the three GTM first principles (the digital space is crowded · relationships are the fastest path to revenue · people know people), and the strategy that falls out of them. Click **Enter the demo →** for onboarding, or **Skip to the agent** to jump straight to the dashboard.
 
 ## Beat 1 — The opportunity feed (0:00–0:40)
 On **Next Best Actions**: "This is First Customers, an AI employee for a founder who just launched her candle brand on MadeThis. It already knows her one unfair advantage: the people who know her." Point at the top card (Jess, 94): every contact is scored **warmth × fit × timing** — visible bars, explainable math, and a "why now."

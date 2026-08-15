@@ -1,10 +1,18 @@
 import { callClaudeJSON } from "./anthropic";
-import type { AskType, Contact, Draft, Playbook } from "./types";
+import type { AskType, Contact, Draft, MessageStage, Playbook } from "./types";
 import { PRODUCT } from "./types";
+
+/** Sections default to [] so a playbook saved before a section existed — an old
+ *  visitor session — still reads cleanly here. */
+function stageRules(playbook: Playbook, stage: MessageStage): string[] {
+  return playbook.stageRules?.[stage] ?? [];
+}
 
 function allRules(playbook: Playbook): string[] {
   return [
     ...playbook.globalRules,
+    ...stageRules(playbook, "firstTouch"),
+    ...stageRules(playbook, "followUp"),
     ...playbook.tierRules.close,
     ...playbook.tierRules.warm,
     ...playbook.tierRules.acquaintance,
@@ -13,10 +21,18 @@ function allRules(playbook: Playbook): string[] {
   ];
 }
 
-/** Does any rule in the playbook contain one of the given signal phrases? */
-function playbookSignals(playbook: Playbook, tier: Contact["closenessTier"], keywords: string[]): boolean {
+/** Does any rule in the playbook contain one of the given signal phrases?
+ *  Only rules that apply to this message are considered — a follow-up lesson
+ *  must not flip a switch on a first touch. */
+function playbookSignals(
+  playbook: Playbook,
+  tier: Contact["closenessTier"],
+  stage: MessageStage,
+  keywords: string[],
+): boolean {
   const relevant = [
     ...playbook.globalRules,
+    ...stageRules(playbook, stage),
     ...playbook.tierRules[tier],
     ...playbook.askStyle,
   ]
@@ -32,6 +48,7 @@ function buildPrompt(
   priorReply?: string,
 ): string {
   const insights = playbook.contactInsights[contact.id] ?? [];
+  const stage: MessageStage = isFollowUp ? "followUp" : "firstTouch";
   return `You are drafting a single warm, personal SMS text on behalf of Maya, founder of ${PRODUCT.brand} (a hand-poured candle brand, ${PRODUCT.itemName}s at $${PRODUCT.price}, with a subscription option). The text goes to someone Maya already knows personally — never to a stranger.
 
 CONTACT
@@ -46,9 +63,13 @@ ${isFollowUp && !priorReply ? `- This is a FOLLOW-UP to a message that got no re
 ${isFollowUp && contact.status === "customer" ? `- They already PURCHASED. This follow-up is a thank-you + check-in, and ALWAYS includes a referral ask in some natural form ("who else do you know that would love this?"). Never re-pitch the product to them.` : ""}
 ${isFollowUp && contact.status === "referred_out" ? `- They gave Maya a REFERRAL instead of buying. This follow-up is a genuine thank-you for the intro and a quick update — no product pitch, no pressure. If natural, mention you'll let them know how it goes with the person they referred.` : ""}
 
+MESSAGE STAGE: ${isFollowUp ? "FOLLOW-UP — a reply inside a thread that already exists" : "FIRST TOUCH — the opening reach-out of this conversation"}
+
 CURRENT PLAYBOOK (the agent's evolving rules — follow these verbatim, they reflect real feedback Maya has given):
 Global rules:
 ${playbook.globalRules.map((r) => `- ${r}`).join("\n") || "- (none yet)"}
+Rules for ${isFollowUp ? "FOLLOW-UP messages (this one is a follow-up)" : "FIRST-TOUCH messages (this one is a first touch)"}:
+${stageRules(playbook, stage).map((r) => `- ${r}`).join("\n") || "- (none yet)"}
 Rules for "${contact.closenessTier}" tier contacts:
 ${playbook.tierRules[contact.closenessTier].map((r) => `- ${r}`).join("\n") || "- (none yet)"}
 Timing rules:
@@ -88,14 +109,15 @@ function fallbackDraft(
   playbook: Playbook,
   isFollowUp: boolean,
 ): Draft {
-  const casualClose = playbookSignals(playbook, "close", [
+  const stage: MessageStage = isFollowUp ? "followUp" : "firstTouch";
+  const casualClose = playbookSignals(playbook, "close", stage, [
     "casual",
     "no-pitch",
     "no pitch",
     "sound like a text from a friend",
     "skip the discount",
   ]);
-  const lowPressureAcq = playbookSignals(playbook, "acquaintance", [
+  const lowPressureAcq = playbookSignals(playbook, "acquaintance", stage, [
     "low-pressure",
     "low pressure",
     "no hard",

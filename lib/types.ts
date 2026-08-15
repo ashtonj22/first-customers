@@ -64,8 +64,17 @@ export interface ChangelogEntry {
   after: string | null;
 }
 
+/** Where a message sits in the relationship: an opening reach-out, or a reply
+ *  inside a thread that already exists. Lessons rarely transfer between the
+ *  two, so the playbook keeps their rules apart. */
+export type MessageStage = "firstTouch" | "followUp";
+
 export interface Playbook {
   globalRules: string[];
+  stageRules: {
+    firstTouch: string[];
+    followUp: string[];
+  };
   tierRules: {
     close: string[];
     warm: string[];

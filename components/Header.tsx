@@ -101,6 +101,13 @@ export default function Header({
           )}
 
           <Link
+            href="/"
+            className="text-xs text-muted-foreground underline-offset-2 hover:text-foreground hover:underline"
+          >
+            Intro
+          </Link>
+
+          <Link
             href="/onboarding"
             className="text-xs text-muted-foreground underline-offset-2 hover:text-foreground hover:underline"
           >

@@ -15,6 +15,7 @@ export default function ProposeCard({
   draft,
   busyAction,
   learnedFlash,
+  title,
   onApprove,
   onReject,
   onLearnEdit,
@@ -24,6 +25,8 @@ export default function ProposeCard({
   draft: Draft;
   busyAction: "approve" | "reject" | null;
   learnedFlash: string | null;
+  /** Defaults to "Propose: {name}"; Conversations names the stage instead. */
+  title?: string;
   onApprove: (message: string) => void;
   onReject: (message: string, reason: string) => void;
   onLearnEdit: (oldMessage: string, newMessage: string) => void;
@@ -48,7 +51,7 @@ export default function ProposeCard({
       <div className="flex items-start justify-between">
         <div>
           <div className="text-sm font-semibold text-foreground">
-            Propose: {contact.name}
+            {title ?? `Propose: ${contact.name}`}
           </div>
           <div className="text-xs text-muted-foreground">
             {contact.relationship} · {contact.closenessTier} tier

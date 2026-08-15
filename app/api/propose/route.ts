@@ -35,7 +35,10 @@ async function handlePOST(req: Request) {
     learned: null,
   });
 
-  return NextResponse.json({ draft, contact });
+  // Returned so the client can tell /api/reject and /api/learn-edit which stage
+  // the draft belonged to — Next Best Actions auto-follows-up for contacts who
+  // already replied, so "came from the propose tab" does not mean first touch.
+  return NextResponse.json({ draft, contact, isFollowUp });
 }
 
 export const POST = withStore(handlePOST);

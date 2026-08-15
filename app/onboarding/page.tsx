@@ -142,7 +142,7 @@ export default function OnboardingPage() {
   const handleStart = () => {
     setLaunching(true);
     setTimeout(() => {
-      router.push("/");
+      router.push("/dashboard");
     }, 700);
   };
 

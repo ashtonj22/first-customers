@@ -18,6 +18,9 @@ export default function NextBestActions({
 }) {
   const [selected, setSelected] = useState<RankedContact | null>(null);
   const [draft, setDraft] = useState<Draft | null>(null);
+  // This tab auto-follows-up for contacts who already replied, so the stage has
+  // to come from the server rather than being assumed to be a first touch.
+  const [isFollowUp, setIsFollowUp] = useState(false);
   const [loadingDraft, setLoadingDraft] = useState(false);
   const [busyAction, setBusyAction] = useState<"approve" | "reject" | null>(null);
   const [learnedFlash, setLearnedFlash] = useState<string | null>(null);
@@ -42,6 +45,7 @@ export default function NextBestActions({
       const data = await res.json();
       if (activeRequest.current === requestId) {
         setDraft(data.draft);
+        setIsFollowUp(!!data.isFollowUp);
       }
     } finally {
       if (activeRequest.current === requestId) {
@@ -83,7 +87,7 @@ export default function NextBestActions({
       const res = await fetch("/api/reject", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ contactId: selected.id, message, reason }),
+        body: JSON.stringify({ contactId: selected.id, message, reason, followUp: isFollowUp }),
       });
       const data = await res.json();
       setLearnedFlash(data.changelogEntry?.insight ?? null);
@@ -101,7 +105,7 @@ export default function NextBestActions({
       const res = await fetch("/api/learn-edit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ contactId: selected.id, oldMessage, newMessage }),
+        body: JSON.stringify({ contactId: selected.id, oldMessage, newMessage, followUp: isFollowUp }),
       });
       const data = await res.json();
       if (data.changelogEntry) {

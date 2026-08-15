@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { Contact, Draft, Message, MessagesStore } from "@/lib/types";
+import ProposeCard from "./ProposeCard";
 
 const STATUS_BADGE: Partial<Record<Contact["status"], { label: string; cls: string }>> = {
   customer: { label: "💜 Customer", cls: "bg-[#a585c8]/15 text-[#7d5ba0]" },
@@ -26,7 +27,8 @@ export default function Conversations({
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [followDraft, setFollowDraft] = useState<Draft | null>(null);
   const [drafting, setDrafting] = useState(false);
-  const [sending, setSending] = useState(false);
+  const [busyAction, setBusyAction] = useState<"approve" | "reject" | null>(null);
+  const [learnedFlash, setLearnedFlash] = useState<string | null>(null);
 
   useEffect(() => {
     fetch("/api/messages")
@@ -41,15 +43,16 @@ export default function Conversations({
   const selected = threaded.find((c) => c.id === selectedId) ?? threaded[0] ?? null;
   const thread: Message[] = selected ? messages[selected.id] ?? [] : [];
 
-  const draftFollowUp = async () => {
-    if (!selected) return;
+  const draftFollowUp = async (contactId?: string) => {
+    const id = contactId ?? selected?.id;
+    if (!id) return;
     setDrafting(true);
     setFollowDraft(null);
     try {
       const res = await fetch("/api/propose", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ contactId: selected.id, followUp: true }),
+        body: JSON.stringify({ contactId: id, followUp: true }),
       });
       const data = await res.json();
       setFollowDraft(data.draft);
@@ -58,23 +61,68 @@ export default function Conversations({
     }
   };
 
-  const sendFollowUp = async () => {
+  const handleApprove = async (message: string) => {
     if (!selected || !followDraft) return;
-    setSending(true);
+    setBusyAction("approve");
     try {
       await fetch("/api/approve", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           contactId: selected.id,
-          message: followDraft.message,
+          message,
           askType: followDraft.askType,
           reasoning: followDraft.reasoning,
         }),
       });
       setFollowDraft(null);
+      setLearnedFlash(null);
     } finally {
-      setSending(false);
+      setBusyAction(null);
+      onDataChanged();
+    }
+  };
+
+  // Every draft in this tab is a reply inside an existing thread, so feedback
+  // here is scoped to the follow-up stage and never rewrites first-touch rules.
+  const handleReject = async (message: string, reason: string) => {
+    if (!selected) return;
+    const contactId = selected.id;
+    setBusyAction("reject");
+    try {
+      const res = await fetch("/api/reject", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ contactId, message, reason, followUp: true }),
+      });
+      const data = await res.json();
+      setLearnedFlash(data.changelogEntry?.insight ?? null);
+    } finally {
+      setBusyAction(null);
+      onDataChanged();
+      // Redraft immediately so the corrected message appears without another
+      // click — the point of rejecting is to see the lesson applied.
+      await draftFollowUp(contactId);
+    }
+  };
+
+  const handleLearnEdit = async (oldMessage: string, newMessage: string) => {
+    if (!selected) return;
+    try {
+      const res = await fetch("/api/learn-edit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          contactId: selected.id,
+          oldMessage,
+          newMessage,
+          followUp: true,
+        }),
+      });
+      const data = await res.json();
+      if (data.changelogEntry) setLearnedFlash(data.changelogEntry.insight);
+      setFollowDraft((d) => (d ? { ...d, message: newMessage } : d));
+    } finally {
       onDataChanged();
     }
   };
@@ -98,6 +146,7 @@ export default function Conversations({
               onClick={() => {
                 setSelectedId(c.id);
                 setFollowDraft(null);
+                setLearnedFlash(null);
               }}
               className={`w-full rounded-lg border bg-card p-3 text-left text-sm transition-colors ${
                 selected?.id === c.id
@@ -165,49 +214,49 @@ export default function Conversations({
 
             {FOLLOWABLE.includes(selected.status) && (
               <div className="mt-4 border-t border-sage-border pt-3">
-                {!followDraft && (
+                {!followDraft && !drafting && (
                   <button
-                    onClick={draftFollowUp}
-                    disabled={drafting}
-                    className="rounded-[2px] border border-sage-border bg-card px-4 py-2 text-sm font-semibold text-sage-foreground hover:bg-muted disabled:opacity-50"
+                    onClick={() => {
+                      setLearnedFlash(null);
+                      draftFollowUp();
+                    }}
+                    className="rounded-[2px] border border-sage-border bg-card px-4 py-2 text-sm font-semibold text-sage-foreground hover:bg-muted"
                   >
-                    {drafting
-                      ? "Drafting…"
-                      : selected.status === "customer"
-                        ? "Draft thank-you & referral ask"
-                        : selected.status === "referred_out"
-                          ? "Draft thank-you"
-                          : "Draft follow-up"}
+                    {selected.status === "customer"
+                      ? "Draft thank-you & referral ask"
+                      : selected.status === "referred_out"
+                        ? "Draft thank-you"
+                        : "Draft follow-up"}
                   </button>
                 )}
-                {followDraft && (
-                  <div className="space-y-2">
-                    <div className="flex justify-end">
-                      <div className="max-w-[75%] rounded-2xl rounded-br-sm border border-dashed border-sage-foreground/40 bg-card px-3.5 py-2 text-[14px] leading-snug text-foreground">
-                        {followDraft.message}
-                      </div>
-                    </div>
-                    <p className="text-right text-xs text-muted-foreground">{followDraft.reasoning}</p>
-                    <div className="flex justify-end gap-2">
-                      <button
-                        onClick={sendFollowUp}
-                        disabled={sending}
-                        className="flex items-center gap-2 rounded-[2px] bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-primary-hover disabled:opacity-50"
-                      >
-                        {sending && (
-                          <span className="inline-block h-3.5 w-3.5 animate-spin rounded-full border-2 border-white/30 border-t-white" />
-                        )}
-                        {sending ? "Sending…" : "Approve & Send"}
-                      </button>
-                      <button
-                        onClick={() => setFollowDraft(null)}
-                        disabled={sending}
-                        className="rounded-[2px] border border-input bg-card px-4 py-2 text-sm font-semibold text-foreground hover:bg-muted disabled:opacity-50"
-                      >
-                        Discard
-                      </button>
-                    </div>
+                {drafting && (
+                  <div className="flex items-center gap-2 rounded-lg border border-sage-border bg-card px-3 py-2 text-sm text-muted-foreground">
+                    <span className="inline-block h-3.5 w-3.5 shrink-0 animate-spin rounded-full border-2 border-muted-foreground/30 border-t-muted-foreground" />
+                    {learnedFlash
+                      ? "Redrafting with the rule it just learned…"
+                      : `Drafting a reply for ${selected.name}…`}
                   </div>
+                )}
+                {followDraft && !drafting && (
+                  <ProposeCard
+                    key={selected.id}
+                    contact={selected}
+                    draft={followDraft}
+                    busyAction={busyAction}
+                    learnedFlash={learnedFlash}
+                    title={
+                      selected.status === "customer" || selected.status === "referred_out"
+                        ? `Thank-you: ${selected.name}`
+                        : `Follow-up: ${selected.name}`
+                    }
+                    onApprove={handleApprove}
+                    onReject={handleReject}
+                    onLearnEdit={handleLearnEdit}
+                    onClose={() => {
+                      setFollowDraft(null);
+                      setLearnedFlash(null);
+                    }}
+                  />
                 )}
               </div>
             )}

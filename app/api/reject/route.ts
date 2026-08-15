@@ -5,10 +5,11 @@ import { withStore } from "@/lib/state";
 
 async function handlePOST(req: Request) {
   const body = await req.json();
-  const { contactId, message, reason } = body as {
+  const { contactId, message, reason, followUp } = body as {
     contactId: string;
     message: string;
     reason: string;
+    followUp?: boolean;
   };
 
   const contact = getContact(contactId);
@@ -35,6 +36,7 @@ async function handlePOST(req: Request) {
     trigger: "rejection",
     contact,
     playbook,
+    isFollowUp: !!followUp,
     reason,
     rejectedMessage: message,
   });

@@ -3,10 +3,20 @@
 import { useEffect, useRef, useState } from "react";
 import type { ChangelogEntry, Playbook } from "@/lib/types";
 
-type Section = "globalRules" | "tierRules.close" | "tierRules.warm" | "tierRules.acquaintance" | "timing" | "askStyle";
+type Section =
+  | "globalRules"
+  | "stageRules.firstTouch"
+  | "stageRules.followUp"
+  | "tierRules.close"
+  | "tierRules.warm"
+  | "tierRules.acquaintance"
+  | "timing"
+  | "askStyle";
 
 const SECTIONS: { key: Section; label: string }[] = [
   { key: "globalRules", label: "Global rules" },
+  { key: "stageRules.firstTouch", label: "First-touch rules" },
+  { key: "stageRules.followUp", label: "Follow-up / reply rules" },
   { key: "tierRules.close", label: "Close tier" },
   { key: "tierRules.warm", label: "Warm tier" },
   { key: "tierRules.acquaintance", label: "Acquaintance tier" },
@@ -18,6 +28,11 @@ function getSection(pb: Playbook, key: Section): string[] {
   if (key.startsWith("tierRules.")) {
     const tier = key.split(".")[1] as "close" | "warm" | "acquaintance";
     return pb.tierRules[tier];
+  }
+  if (key.startsWith("stageRules.")) {
+    const stage = key.split(".")[1] as "firstTouch" | "followUp";
+    // A session saved before this section existed has no stageRules at all.
+    return pb.stageRules?.[stage] ?? [];
   }
   return pb[key as "globalRules" | "timing" | "askStyle"];
 }

@@ -84,6 +84,14 @@ npm run dev                  # http://localhost:3000
 
 See `DEMO-SCRIPT.md` for the 3–5 minute walkthrough.
 
+## Routes
+
+| Route | What it is |
+| --- | --- |
+| `/` | Intro — the problem, the GTM first principles, and the strategy behind the build |
+| `/onboarding` | Onboarding demo — contact import, email cross-reference, selection, agent interview |
+| `/dashboard` | The agent itself — next best actions, conversations, playbook, network, activity |
+
 ## Deployment
 
 Deployed code on Vercel gets a **read-only filesystem**, so the local JSON-file

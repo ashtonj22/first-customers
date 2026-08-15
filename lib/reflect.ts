@@ -8,6 +8,9 @@ export interface ReflectInput {
   trigger: ReflectTrigger;
   contact: Contact;
   playbook: Playbook;
+  /** Was the message being learned from a reply inside an existing thread?
+   *  Decides which stage bucket a stage-specific lesson lands in. */
+  isFollowUp?: boolean;
   // rejection
   reason?: string;
   rejectedMessage?: string;
@@ -51,8 +54,14 @@ const strArr = (v: unknown): string[] | null =>
 function sanitizePlaybook(previous: Playbook, candidate: Playbook): Playbook {
   const prevTiers = previous.tierRules ?? { close: [], warm: [], acquaintance: [] };
   const candTiers = (candidate.tierRules ?? {}) as Partial<Playbook["tierRules"]>;
+  const prevStages = previous.stageRules ?? { firstTouch: [], followUp: [] };
+  const candStages = (candidate.stageRules ?? {}) as Partial<Playbook["stageRules"]>;
   return normalizeInsights({
     globalRules: strArr(candidate.globalRules) ?? previous.globalRules ?? [],
+    stageRules: {
+      firstTouch: strArr(candStages.firstTouch) ?? prevStages.firstTouch ?? [],
+      followUp: strArr(candStages.followUp) ?? prevStages.followUp ?? [],
+    },
     tierRules: {
       close: strArr(candTiers.close) ?? prevTiers.close ?? [],
       warm: strArr(candTiers.warm) ?? prevTiers.warm ?? [],
@@ -70,6 +79,10 @@ function sanitizePlaybook(previous: Playbook, candidate: Playbook): Playbook {
 
 function buildPrompt(input: ReflectInput): string {
   const { trigger, contact, playbook } = input;
+  const stageKey = input.isFollowUp ? "followUp" : "firstTouch";
+  const stageLabel = input.isFollowUp
+    ? "a FOLLOW-UP (a reply inside a thread that already exists)"
+    : "a FIRST TOUCH (the opening reach-out of the conversation)";
   let eventDescription = "";
   if (trigger === "rejection") {
     eventDescription = `Maya REJECTED a proposed message to ${contact.name} (${contact.closenessTier} tier, ${contact.relationship}). Rejected message: "${input.rejectedMessage}". Reason given: "${input.reason}".`;
@@ -90,12 +103,14 @@ ${JSON.stringify(playbookForPrompt, null, 2)}
 
 NEW EVENT TO LEARN FROM:
 ${eventDescription}
+The message involved was ${stageLabel}.
 
 Update the playbook to reflect this lesson. First decide the SCOPE of the lesson, then apply it at that scope:
 - Specific to this one person only → add a note to contactInsights["${contact.id}"].
+- About how to write at THIS STAGE (opening a conversation vs. continuing one) → add the rule to stageRules.${stageKey} and NOWHERE ELSE. Do not also copy it into tierRules or globalRules — those apply at every stage, and a lesson about follow-ups must never change how first-touch messages are written (or the reverse). Feedback like "don't re-pitch, continue the conversation they started" or "don't open with an announcement" is stage-specific.
 - Applies to one closeness tier → add/edit a rule in that tier's tierRules.
 - Applies to MULTIPLE tiers (e.g. "lead with the friends & family discount" makes sense for close AND warm AND acquaintance contacts) → add the rule to EACH applicable tier, phrased appropriately for that tier. Do NOT under-scope: if Maya's feedback would clearly improve messages to other tiers too, apply it to those tiers now — she should not have to repeat the same feedback per tier.
-- Universal to every message → add to globalRules instead of duplicating across tiers.
+- Universal to every message, at every tier AND every stage → add to globalRules instead of duplicating across tiers.
 Beyond the scoped change, keep edits small and targeted — don't rewrite unrelated rules. Keep the full existing playbook structure and all other rules unchanged.
 
 Respond with ONLY a JSON object, no prose, matching exactly this shape:
@@ -113,12 +128,48 @@ Respond with ONLY a JSON object, no prose, matching exactly this shape:
 
 // ---------- deterministic fallback ----------
 
+/** Feedback about how to open vs. how to continue a conversation, which must
+ *  land in the stage bucket rather than leaking across every message. */
+const STAGE_REASON_SIGNALS = [
+  "re-pitch",
+  "repitch",
+  "pitch again",
+  "already pitched",
+  "restating",
+  "restate",
+  "continue the conversation",
+  "announce",
+  "announcement",
+  "update",
+];
+
 function fallbackReflect(input: ReflectInput): { playbook: Playbook; changelogEntry: Omit<ChangelogEntry, "id" | "timestamp"> } {
   const pb = normalizeInsights(clonePlaybook(input.playbook));
   const { contact } = input;
+  const stageKey: "firstTouch" | "followUp" = input.isFollowUp ? "followUp" : "firstTouch";
+  if (!pb.stageRules) pb.stageRules = { firstTouch: [], followUp: [] };
 
   if (input.trigger === "rejection") {
     const reason = (input.reason ?? "").toLowerCase();
+    if (STAGE_REASON_SIGNALS.some((s) => reason.includes(s))) {
+      const before = pb.stageRules[stageKey][0] ?? null;
+      const newRule = input.isFollowUp
+        ? `On follow-ups, continue the conversation they actually started — reference what they said instead of re-pitching or restating the original message. (Maya's feedback: "${input.reason}")`
+        : `On a first touch, don't open with an announcement or update about the business — lead with the person. (Maya's feedback: "${input.reason}")`;
+      if (!pb.stageRules[stageKey].some((r) => r.includes(input.reason ?? ""))) {
+        pb.stageRules[stageKey].unshift(newRule);
+      }
+      return {
+        playbook: pb,
+        changelogEntry: {
+          trigger: "rejection",
+          insight: `Rejected for how the ${input.isFollowUp ? "follow-up" : "first touch"} was framed — the lesson was scoped to that stage only, leaving the other stage untouched.`,
+          ruleChanged: `stageRules.${stageKey}`,
+          before,
+          after: newRule,
+        },
+      };
+    }
     if (
       (reason.includes("salesy") || reason.includes("sales") || reason.includes("pushy")) &&
       contact.closenessTier === "close"
