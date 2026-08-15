@@ -411,13 +411,24 @@ export default function OnboardingPage() {
                         >
                           Use example answer
                         </button>
-                        <button
-                          onClick={handleSubmitAnswer}
-                          disabled={!answerDraft.trim()}
-                          className="rounded-[2px] bg-primary px-5 py-1.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary-hover disabled:opacity-60"
-                        >
-                          Submit
-                        </button>
+                        <div className="flex items-center gap-3">
+                          <button
+                            onClick={() => {
+                              setAnswerDraft("");
+                              setInterviewIndex(INTERVIEW_CONTACTS.length);
+                            }}
+                            className="text-xs font-medium text-muted-foreground underline-offset-2 hover:text-foreground hover:underline"
+                          >
+                            Skip the rest →
+                          </button>
+                          <button
+                            onClick={handleSubmitAnswer}
+                            disabled={!answerDraft.trim()}
+                            className="rounded-[2px] bg-primary px-5 py-1.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary-hover disabled:opacity-60"
+                          >
+                            Submit
+                          </button>
+                        </div>
                       </div>
                     </>
                   );
@@ -444,14 +455,19 @@ export default function OnboardingPage() {
                   {INTERVIEW_CONTACTS.map((c) => (
                     <li key={c.name} className="flex items-center justify-between gap-3 text-sm">
                       <span className="text-foreground">{c.name}</span>
-                      <span className="max-w-[70%] truncate rounded-[2px] bg-sage px-2 py-0.5 text-[11px] font-medium text-sage-foreground">
-                        ✓ Noted — this becomes the agent&apos;s context
-                      </span>
+                      {interviewNotes[c.name] ? (
+                        <span className="max-w-[70%] truncate rounded-[2px] bg-sage px-2 py-0.5 text-[11px] font-medium text-sage-foreground">
+                          ✓ Noted — this becomes the agent&apos;s context
+                        </span>
+                      ) : (
+                        <span className="text-xs text-muted-foreground">the agent will ask as it goes</span>
+                      )}
                     </li>
                   ))}
                 </ul>
                 <p className="mb-6 text-center text-sm text-muted-foreground">
-                  3 interviewed now · the agent asks about the rest as it goes
+                  {Object.keys(interviewNotes).length} interviewed now · the agent asks about the
+                  rest as it goes
                 </p>
                 <div className="flex justify-center">
                   <button
